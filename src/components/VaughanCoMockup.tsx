@@ -53,9 +53,11 @@ export default function VaughanCoMockup() {
   const isDark = theme === 'dark';
 
   // —— Brand tokens (Maxine Studio palette) ——
-  const sage       = isDark ? '#D4BC8E' : '#B59A6A';
-  const sageDeep   = '#9A7D52';
-  const sageWash   = isDark ? '#1F1B14' : '#F3EDE2';
+  const brass      = isDark ? '#D4BC8E' : '#B59A6A';
+  const brassDeep  = '#9A7D52';
+  const brassWash  = isDark ? '#1F1B14' : '#F3EDE2';
+  const sage       = isDark ? '#8B9A7E' : '#5C6150';
+  const sageWash   = isDark ? '#1A1E16' : '#EDEFEB';
   const bg         = isDark ? '#121212' : '#F5F1EC';
   const surface    = isDark ? '#1A1612' : '#FDFBF8';
   const surfaceAlt = isDark ? '#231E18' : '#E7E1D8';
@@ -78,23 +80,39 @@ export default function VaughanCoMockup() {
 
   const card = { background: surface, border: `1px solid ${border}`, borderRadius: '2px', padding: isMobile ? '16px' : '18px' };
   const microLabel = { fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', color: textMuted, fontWeight: 500 };
-  const sectionLabel = { fontSize: '10px', letterSpacing: '0.28em', textTransform: 'uppercase', color: sage, fontWeight: 500 };
+  const sectionLabel = { fontSize: '10px', letterSpacing: '0.28em', textTransform: 'uppercase', color: brass, fontWeight: 500 };
 
   const primaryBtn = { background: text, color: bg, border: 'none', padding: isMobile ? '12px 18px' : '13px 24px', fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '10px', borderRadius: '1px' };
   const ghostBtn = { background: 'transparent', color: text, border: `1px solid ${border}`, padding: isMobile ? '11px 18px' : '12px 24px', fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '10px', borderRadius: '1px' };
-  const sageBtn = { ...primaryBtn, background: sage, color: '#121212' };
+  const brassBtn = { ...primaryBtn, background: brass, color: '#121212' };
 
-  const Logo = ({ size = 18, showByline = false }) => (
-    <div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '7px', fontFamily: serif, fontSize: `${size}px`, letterSpacing: '0.1em', color: text }}>
-        <span>VAUGHAN</span><span style={{ color: sage, fontSize: `${size * 0.95}px` }}>+</span><span>CO.</span>
+  const VCMonogram = ({ size = 28 }: { size?: number }) => {
+    const scale = size / 28;
+    return (
+      <svg width={size} height={size * 1.25} viewBox="0 0 28 35" fill="none" style={{ display: 'block' }}>
+        <path d="M14 2 C6.268 2 2 8.268 2 14 L2 35" stroke={brass} strokeWidth={1.2 / scale} fill="none" />
+        <path d="M14 2 C21.732 2 26 8.268 26 14 L26 35" stroke={brass} strokeWidth={1.2 / scale} fill="none" />
+        <path d="M14 2 L14 6" stroke={brass} strokeWidth={1.2 / scale} />
+        <text x="8.5" y="24" fontFamily={serif} fontSize="13" fill={text} fontWeight="400" letterSpacing="0.02em">V</text>
+        <text x="14.5" y="24" fontFamily={serif} fontSize="9" fill={brass} fontWeight="400" letterSpacing="0.02em">c</text>
+      </svg>
+    );
+  };
+
+  const Logo = ({ size = 18, showByline = false, showMonogram = false }: { size?: number; showByline?: boolean; showMonogram?: boolean }) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: `${size * 0.55}px` }}>
+      {showMonogram && <VCMonogram size={size * 1.5} />}
+      <div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '7px', fontFamily: serif, fontSize: `${size}px`, letterSpacing: '0.1em', color: text }}>
+          <span>VAUGHAN</span><span style={{ color: brass, fontSize: `${size * 0.95}px` }}>+</span><span>CO.</span>
+        </div>
+        {showByline && <div style={{ fontSize: '9px', letterSpacing: '0.32em', textTransform: 'uppercase', color: textMuted, marginTop: '4px', fontWeight: 500 }}>A Design Studio</div>}
       </div>
-      {showByline && <div style={{ fontSize: '9px', letterSpacing: '0.32em', textTransform: 'uppercase', color: textMuted, marginTop: '4px', fontWeight: 500 }}>By Liz Vaughan</div>}
     </div>
   );
 
   const LizSig = ({ size = 22 }) => (
-    <div style={{ fontFamily: 'Brush Script MT, "Lucida Handwriting", cursive', fontSize: `${size}px`, color: sage, fontStyle: 'italic', letterSpacing: '0.02em' }}>Liz</div>
+    <div style={{ fontFamily: 'Brush Script MT, "Lucida Handwriting", cursive', fontSize: `${size}px`, color: brass, fontStyle: 'italic', letterSpacing: '0.02em' }}>Liz</div>
   );
 
   // —— Top frame (responsive) ——
@@ -108,7 +126,7 @@ export default function VaughanCoMockup() {
             { id: 'symphony', label: isMobile ? 'Symphony' : 'Symphony portal' },
             { id: 'admin', label: isMobile ? 'Admin' : 'Studio admin' },
           ].map(v => (
-            <button key={v.id} onClick={() => setView(v.id)} style={{ background: view === v.id ? sageWash : 'transparent', color: view === v.id ? (isDark ? sage : sageDeep) : textMuted, border: 'none', padding: isMobile ? '7px 10px' : '7px 13px', fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', whiteSpace: 'nowrap' }}>{v.label}</button>
+            <button key={v.id} onClick={() => setView(v.id)} style={{ background: view === v.id ? brassWash : 'transparent', color: view === v.id ? (isDark ? brass : brassDeep) : textMuted, border: 'none', padding: isMobile ? '7px 10px' : '7px 13px', fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', whiteSpace: 'nowrap' }}>{v.label}</button>
           ))}
         </div>
       </div>
@@ -125,7 +143,7 @@ export default function VaughanCoMockup() {
     <div style={{ position: 'relative' }}>
       {/* Nav */}
       <nav style={{ padding: isMobile ? '18px 20px' : '22px 56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Logo size={isMobile ? 15 : 18} showByline={!isMobile} />
+        <Logo size={isMobile ? 15 : 18} showByline={!isMobile} showMonogram={!isMobile} />
         {isMobile ? (
           <button onClick={() => setNavOpen(!navOpen)} style={{ background: 'transparent', border: `1px solid ${border}`, padding: '8px', cursor: 'pointer', borderRadius: '1px' }}>
             {navOpen ? <X size={14} color={text} /> : <Menu size={14} color={text} />}
@@ -155,7 +173,7 @@ export default function VaughanCoMockup() {
         <div>
           <div style={{ ...sectionLabel, marginBottom: isMobile ? '20px' : '28px' }}>Liz Vaughan · CEO + Principal Designer</div>
           <h1 style={{ fontFamily: serif, fontSize: isMobile ? '40px' : '64px', lineHeight: '1.02', fontWeight: 400, margin: '0 0 24px', letterSpacing: '-0.015em' }}>
-            Designed by <em style={{ color: sage, fontStyle: 'italic' }}>Liz.</em><br />Built for your family.
+            Designed by <em style={{ color: brass, fontStyle: 'italic' }}>Liz.</em><br />Built for your family.
           </h1>
           <p style={{ fontSize: isMobile ? '14px' : '15px', lineHeight: '1.85', color: textMuted, maxWidth: '480px', margin: '0 0 28px' }}>
             Liz Vaughan has designed and built more than 180 custom homes across Central Ohio. Each one begins the same way — a conversation, a blueprint, a walk through your house in three dimensions before a single stud goes up.
@@ -203,7 +221,7 @@ export default function VaughanCoMockup() {
           <div>
             <div style={{ ...sectionLabel, marginBottom: '10px' }}>From the studio</div>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '28px', fontWeight: 400, margin: 0, letterSpacing: '-0.005em' }}>
-              Recent work, <em style={{ color: sage, fontStyle: 'italic' }}>@vaughanand.co</em>
+              Recent work, <em style={{ color: brass, fontStyle: 'italic' }}>@vaughanand.co</em>
             </h2>
           </div>
           <a style={{ ...microLabel, color: text, display: 'inline-flex', alignItems: 'center', gap: '7px', cursor: 'pointer' }}>
@@ -234,11 +252,11 @@ export default function VaughanCoMockup() {
         <div style={{ display: 'grid', gridTemplateColumns: cols('1fr', '1fr 2fr'), gap: cols('32px', '64px'), alignItems: 'flex-start' }}>
           <div>
             <div style={{ ...sectionLabel, marginBottom: '14px' }}>How Liz works</div>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? '28px' : '38px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>The <em style={{ color: sage, fontStyle: 'italic' }}>Liz</em> Method.</h2>
+            <h2 style={{ fontFamily: serif, fontSize: isMobile ? '28px' : '38px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>The <em style={{ color: brass, fontStyle: 'italic' }}>Liz</em> Method.</h2>
             <p style={{ fontSize: '13px', lineHeight: '1.85', color: textMuted, marginBottom: '20px' }}>
               Every home Liz builds moves through five careful steps. Five movements, one composition — yours.
             </p>
-            <a style={{ ...microLabel, color: sage, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '7px' }}>Read the full method <ArrowRight size={11} /></a>
+            <a style={{ ...microLabel, color: brass, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '7px' }}>Read the full method <ArrowRight size={11} /></a>
           </div>
           <div>
             {[
@@ -249,7 +267,7 @@ export default function VaughanCoMockup() {
               { n: 'V', title: 'The Gift', sub: 'On move-in day, Liz hands you a curated workbook documenting your home, from blueprint to keys.' },
             ].map(({ n, title, sub }, i) => (
               <div key={n} style={{ display: 'grid', gridTemplateColumns: cols('40px 1fr', '60px 1fr'), gap: '16px', padding: '20px 0', borderTop: i === 0 ? `1px solid ${border}` : 'none', borderBottom: `1px solid ${border}` }}>
-                <div style={{ fontFamily: serif, fontSize: '20px', color: sage, fontStyle: 'italic' }}>{n}</div>
+                <div style={{ fontFamily: serif, fontSize: '20px', color: brass, fontStyle: 'italic' }}>{n}</div>
                 <div>
                   <div style={{ fontFamily: serif, fontSize: isMobile ? '17px' : '19px', marginBottom: '6px' }}>{title}</div>
                   <div style={{ fontSize: '13px', lineHeight: '1.7', color: textMuted }}>{sub}</div>
@@ -264,18 +282,18 @@ export default function VaughanCoMockup() {
       <section style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}` }}>
         <div style={{ background: '#2B211A', color: '#F1EDE6', padding: isMobile ? '32px 24px' : '48px', borderRadius: '2px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1.2fr'), gap: cols('28px', '48px'), alignItems: 'center' }}>
           <div>
-            <div style={{ ...sectionLabel, color: sage, marginBottom: '14px' }}>Powered by Lume</div>
+            <div style={{ ...sectionLabel, color: brass, marginBottom: '14px' }}>Powered by Lume</div>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? '24px' : '34px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>
-              Walk every room <em style={{ color: sage, fontStyle: 'italic' }}>before</em> it's framed.
+              Walk every room <em style={{ color: brass, fontStyle: 'italic' }}>before</em> it's framed.
             </h2>
             <p style={{ fontSize: '13px', lineHeight: '1.8', color: '#B5AA9A', marginBottom: '24px' }}>
               Once Liz structures your blueprints, she builds your interior in Lume. Photoreal 3D, live in your Symphony space.
             </p>
-            <button style={sageBtn}>See a Liz walkthrough <ArrowRight size={12} /></button>
+            <button style={brassBtn}>See a Liz walkthrough <ArrowRight size={12} /></button>
           </div>
           <div style={{ aspectRatio: '5/4', background: '#1A1612', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #3A3228' }}>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Box size={36} color={sage} strokeWidth={0.8} />
+              <Box size={36} color={brass} strokeWidth={0.8} />
             </div>
             <div style={{ position: 'absolute', bottom: '12px', left: '12px', right: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B5AA9A' }}>Riverlea · Primary</div>
@@ -293,14 +311,14 @@ export default function VaughanCoMockup() {
           <div>
             <div style={{ ...sectionLabel, marginBottom: '12px' }}>The inspiration book</div>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: '0 0 14px', lineHeight: '1.15' }}>
-              Get Liz's <em style={{ color: sage, fontStyle: 'italic' }}>2026</em> inspiration book.
+              Get Liz's <em style={{ color: brass, fontStyle: 'italic' }}>2026</em> inspiration book.
             </h2>
             <p style={{ fontSize: '13px', lineHeight: '1.8', color: textMuted, marginBottom: '20px' }}>
               48 pages. Six homes, hand-selected. Liz's commentary on each. Where she found the stone. Why this faucet. How that ceiling.
             </p>
             <div style={{ display: 'flex', gap: '6px', flexDirection: cols('column', 'row') }}>
               <input placeholder="Email address" style={{ flex: 1, background: surface, border: `1px solid ${border}`, padding: '12px 14px', fontSize: '13px', color: text, outline: 'none', borderRadius: '1px', fontFamily: sans, minWidth: 0 }} />
-              <button style={sageBtn}>Send it <Send size={11} /></button>
+              <button style={brassBtn}>Send it <Send size={11} /></button>
             </div>
             <div style={{ ...microLabel, marginTop: '12px', color: textFaint }}>Liz only sends a few notes a year. No noise.</div>
           </div>
@@ -322,21 +340,21 @@ export default function VaughanCoMockup() {
             <Music size={20} color={sage} strokeWidth={1.2} style={{ marginBottom: '18px' }} />
             <div style={{ ...sectionLabel, marginBottom: '10px' }}>Symphony — by Liz</div>
             <h3 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '26px', fontWeight: 400, margin: '0 0 12px', lineHeight: '1.15' }}>
-              Your own space.<br /><em style={{ color: sage, fontStyle: 'italic' }}>With Liz.</em>
+              Your own space.<br /><em style={{ color: brass, fontStyle: 'italic' }}>With Liz.</em>
             </h3>
             <p style={{ fontSize: '13px', lineHeight: '1.8', color: textMuted, marginBottom: '18px' }}>
               Every client gets a private studio with Liz — blueprints, 3D walks, selections, invoices, and her direct line.
             </p>
-            <a style={{ ...microLabel, color: sage, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>Tour a Symphony space <ArrowRight size={11} /></a>
+            <a style={{ ...microLabel, color: brass, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>Tour a Symphony space <ArrowRight size={11} /></a>
           </div>
           <div style={{ ...card, padding: isMobile ? '24px' : '32px' }}>
             <div style={{ ...sectionLabel, marginBottom: '10px' }}>Begin a conversation</div>
             <h3 style={{ fontFamily: serif, fontSize: isMobile ? '20px' : '22px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.2' }}>
-              30 minutes with <em style={{ color: sage, fontStyle: 'italic' }}>Liz.</em>
+              30 minutes with <em style={{ color: brass, fontStyle: 'italic' }}>Liz.</em>
             </h3>
             <div style={{ display: 'flex', gap: '4px', marginBottom: '10px', overflow: 'auto' }}>
               {['Mon 19', 'Tue 20', 'Wed 21', 'Thu 22', 'Fri 23'].map((d, i) => (
-                <button key={d} style={{ flex: '1 0 auto', padding: '10px 8px', background: i === 2 ? sage : 'transparent', border: i === 2 ? 'none' : `1px solid ${border}`, color: i === 2 ? '#121212' : text, cursor: 'pointer', fontSize: '11px', borderRadius: '1px', fontFamily: serif, fontStyle: i === 2 ? 'normal' : 'italic', whiteSpace: 'nowrap' }}>{d}</button>
+                <button key={d} style={{ flex: '1 0 auto', padding: '10px 8px', background: i === 2 ? brass : 'transparent', border: i === 2 ? 'none' : `1px solid ${border}`, color: i === 2 ? '#121212' : text, cursor: 'pointer', fontSize: '11px', borderRadius: '1px', fontFamily: serif, fontStyle: i === 2 ? 'normal' : 'italic', whiteSpace: 'nowrap' }}>{d}</button>
               ))}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px', marginBottom: '14px' }}>
@@ -361,8 +379,8 @@ export default function VaughanCoMockup() {
       </section>
 
       <footer style={{ padding: isMobile ? '24px 20px' : '32px 56px', borderTop: `1px solid ${borderSoft}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: cols('column', 'row'), gap: '12px' }}>
-        <Logo size={14} showByline />
-        <div style={{ ...microLabel, color: textFaint, textAlign: 'center' }}>Design. Build. Family. · © 2026</div>
+        <Logo size={14} showByline showMonogram />
+        <div style={{ ...microLabel, color: textFaint, textAlign: 'center' }}>Thoughtful Spaces. Intentional Living. · © 2026</div>
       </footer>
 
       {/* Sticky CTA */}
@@ -373,7 +391,7 @@ export default function VaughanCoMockup() {
             {isMobile ? 'Booking late 2026.' : 'Liz is booking late 2026 projects now.'}
           </span>
         </div>
-        <button style={{ background: sage, color: '#121212', border: 'none', padding: isMobile ? '7px 12px' : '8px 16px', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', display: 'flex', alignItems: 'center', gap: '7px', whiteSpace: 'nowrap', flexShrink: 0 }}>
+        <button style={{ background: brass, color: '#121212', border: 'none', padding: isMobile ? '7px 12px' : '8px 16px', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', display: 'flex', alignItems: 'center', gap: '7px', whiteSpace: 'nowrap', flexShrink: 0 }}>
           {isMobile ? 'Begin' : 'Begin with Liz'} <ArrowRight size={11} />
         </button>
       </div>
@@ -398,9 +416,9 @@ export default function VaughanCoMockup() {
   const SymphonySidebar = () => (
     <>
       <Logo size={14} />
-      <div style={{ fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: sage, marginTop: '4px', marginLeft: '2px', fontWeight: 500 }}>Symphony</div>
+      <div style={{ fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: brass, marginTop: '4px', marginLeft: '2px', fontWeight: 500 }}>Symphony</div>
 
-      <div style={{ marginTop: '24px', padding: '14px', background: sageWash, borderRadius: '2px' }}>
+      <div style={{ marginTop: '24px', padding: '14px', background: brassWash, borderRadius: '2px' }}>
         <div style={{ ...microLabel, marginBottom: '8px', letterSpacing: '0.18em' }}>Your space</div>
         <div style={{ fontFamily: serif, fontSize: '15px', marginBottom: '4px' }}>The Mercer residence</div>
         <div style={{ fontSize: '11px', color: textMuted }}>Riverlea · 5,420 sf</div>
@@ -408,10 +426,10 @@ export default function VaughanCoMockup() {
 
       <nav style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '1px' }}>
         {SymphonyNav.map(({ id, icon: Icon, label, badge }) => (
-          <div key={id} onClick={() => setSymphonyTab(id)} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', fontSize: '12px', background: symphonyTab === id ? sageWash : 'transparent', color: symphonyTab === id ? (isDark ? sage : sageDeep) : textMuted, cursor: 'pointer', borderRadius: '2px', fontWeight: symphonyTab === id ? 500 : 400 }}>
+          <div key={id} onClick={() => setSymphonyTab(id)} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', fontSize: '12px', background: symphonyTab === id ? brassWash : 'transparent', color: symphonyTab === id ? (isDark ? brass : brassDeep) : textMuted, cursor: 'pointer', borderRadius: '2px', fontWeight: symphonyTab === id ? 500 : 400 }}>
             <Icon size={14} strokeWidth={1.4} />
             <span style={{ flex: 1 }}>{label}</span>
-            {badge && <span style={{ background: sage, color: '#121212', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
+            {badge && <span style={{ background: brass, color: '#121212', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
           </div>
         ))}
       </nav>
@@ -419,7 +437,7 @@ export default function VaughanCoMockup() {
       <div style={{ marginTop: '24px', padding: '14px', background: surfaceAlt, borderRadius: '2px' }}>
         <div style={{ ...microLabel, marginBottom: '10px' }}>Your designer</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#121212', fontWeight: 500, fontSize: '11px', fontFamily: serif }}>LV</div>
+          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F1EDE6', fontWeight: 500, fontSize: '11px', fontFamily: serif }}>LV</div>
           <div>
             <div style={{ fontSize: '12px', fontWeight: 500 }}>Liz Vaughan</div>
             <div style={{ fontSize: '10px', color: textMuted }}>Principal</div>
@@ -439,7 +457,7 @@ export default function VaughanCoMockup() {
             <Menu size={14} color={text} />
           </button>
           <Logo size={13} />
-          <div style={{ fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: sage, fontWeight: 500 }}>Symphony</div>
+          <div style={{ fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: brass, fontWeight: 500 }}>Symphony</div>
         </div>
       )}
 
@@ -474,7 +492,7 @@ export default function VaughanCoMockup() {
         <div>
           <div style={{ ...sectionLabel, marginBottom: '8px' }}>Welcome back</div>
           <h1 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: 0, letterSpacing: '-0.005em', lineHeight: '1.15' }}>
-            Caroline, you're in the <em style={{ color: sage, fontStyle: 'italic' }}>third movement.</em>
+            Caroline, you're in the <em style={{ color: brass, fontStyle: 'italic' }}>third movement.</em>
           </h1>
           <p style={{ fontSize: '12px', color: textMuted, marginTop: '6px' }}>Liz updated your space yesterday at 4:18 PM.</p>
         </div>
@@ -494,7 +512,7 @@ export default function VaughanCoMockup() {
         <div style={{ display: 'flex', gap: '4px', marginBottom: '14px', overflow: isMobile ? 'auto' : 'visible' }}>
           {['Listening', 'Drafting', 'The Walk', 'The Build', 'The Gift'].map((stage, i) => (
             <div key={stage} style={{ flex: '1 0 auto', minWidth: isMobile ? '70px' : 'auto' }}>
-              <div style={{ height: '2px', background: i <= 2 ? sage : surfaceAlt, marginBottom: '8px' }} />
+              <div style={{ height: '2px', background: i <= 2 ? brass : surfaceAlt, marginBottom: '8px' }} />
               <div style={{ fontSize: '10px', color: i <= 2 ? text : textMuted, fontFamily: serif, fontStyle: i === 2 ? 'italic' : 'normal', whiteSpace: 'nowrap' }}>{['I.', 'II.', 'III.', 'IV.', 'V.'][i]} {stage}</div>
             </div>
           ))}
@@ -504,7 +522,7 @@ export default function VaughanCoMockup() {
             <div key={l}>
               <div style={{ ...microLabel, marginBottom: '6px' }}>{l}</div>
               <div style={{ fontSize: '13px', fontWeight: 500, marginBottom: '3px' }}>{v}</div>
-              <div style={{ fontSize: '11px', color: sage }}>{sub}</div>
+              <div style={{ fontSize: '11px', color: brass }}>{sub}</div>
             </div>
           ))}
         </div>
@@ -514,7 +532,7 @@ export default function VaughanCoMockup() {
         <div style={{ ...card, padding: 0, overflow: 'hidden' }}>
           <div style={{ aspectRatio: '16/10', background: isDark ? '#231E18' : '#DDD6C8', position: 'relative' }}>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Box size={32} color={sage} strokeWidth={0.8} />
+              <Box size={32} color={brass} strokeWidth={0.8} />
             </div>
             <div style={{ position: 'absolute', top: '11px', left: '11px', background: 'rgba(255,255,255,0.95)', color: '#121212', padding: '4px 9px', fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px' }}>Lume · Live</div>
             <div style={{ position: 'absolute', bottom: '11px', left: '11px', right: '11px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -526,13 +544,13 @@ export default function VaughanCoMockup() {
           </div>
           <div style={{ padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ fontSize: '11px', color: textMuted }}>12 rooms · updated yesterday</div>
-            <a style={{ ...microLabel, color: sage, display: 'flex', alignItems: 'center', gap: '4px' }}>Open in Lume <ExternalLink size={9} /></a>
+            <a style={{ ...microLabel, color: brass, display: 'flex', alignItems: 'center', gap: '4px' }}>Open in Lume <ExternalLink size={9} /></a>
           </div>
         </div>
 
         <div style={card}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <div style={{ fontFamily: serif, fontSize: '16px' }}>With <em style={{ color: sage, fontStyle: 'italic' }}>Liz</em></div>
+            <div style={{ fontFamily: serif, fontSize: '16px' }}>With <em style={{ color: brass, fontStyle: 'italic' }}>Liz</em></div>
             <div style={{ fontSize: '9px', color: sage, display: 'flex', alignItems: 'center', gap: '4px', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
               <Circle size={5} fill={sage} /> Live
             </div>
@@ -543,7 +561,7 @@ export default function VaughanCoMockup() {
               { day: 'Thu', date: '22', time: '2:00 PM', label: 'Lighting review', open: false },
               { day: 'Mon', date: '26', time: 'Open', label: 'Book with Liz', open: true },
             ].map((evt, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', background: evt.open ? sageWash : surfaceAlt, borderRadius: '1px', cursor: 'pointer', border: evt.open ? `1px dashed ${sage}` : 'none' }}>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', background: evt.open ? brassWash : surfaceAlt, borderRadius: '1px', cursor: 'pointer', border: evt.open ? `1px dashed ${brass}` : 'none' }}>
                 <div style={{ textAlign: 'center', minWidth: '24px' }}>
                   <div style={{ fontSize: '8px', color: textMuted, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{evt.day}</div>
                   <div style={{ fontFamily: serif, fontSize: '15px' }}>{evt.date}</div>
@@ -552,7 +570,7 @@ export default function VaughanCoMockup() {
                   <div style={{ fontSize: '11px', fontWeight: 500 }}>{evt.label}</div>
                   <div style={{ fontSize: '10px', color: textMuted }}>{evt.time}</div>
                 </div>
-                {evt.open && <Plus size={12} color={sage} style={{ flexShrink: 0 }} />}
+                {evt.open && <Plus size={12} color={brass} style={{ flexShrink: 0 }} />}
               </div>
             ))}
           </div>
@@ -564,14 +582,14 @@ export default function VaughanCoMockup() {
           <div style={{ fontFamily: serif, fontSize: '15px', marginBottom: '10px' }}>Awaiting you</div>
           {[{ name: 'Kitchen pendant', due: 'Fri' }, { name: 'Bath stone', due: 'Mon' }, { name: 'Front door finish', due: 'May 30' }].map((s, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 0', borderTop: i === 0 ? 'none' : `1px solid ${borderSoft}` }}>
-              <Circle size={10} color={sage} strokeWidth={1.5} />
+              <Circle size={10} color={brass} strokeWidth={1.5} />
               <div style={{ flex: 1, fontSize: '12px' }}>{s.name}</div>
               <div style={{ ...microLabel, color: textFaint }}>{s.due}</div>
             </div>
           ))}
         </div>
         <div style={card}>
-          <div style={{ fontFamily: serif, fontSize: '15px', marginBottom: '10px' }}>From <em style={{ color: sage, fontStyle: 'italic' }}>Liz</em></div>
+          <div style={{ fontFamily: serif, fontSize: '15px', marginBottom: '10px' }}>From <em style={{ color: brass, fontStyle: 'italic' }}>Liz</em></div>
           <div style={{ fontSize: '11px', color: textMuted, lineHeight: '1.7', marginBottom: '8px' }}>
             "Pulled three pendant options for the island — take a look in selections when you have a moment."
           </div>
@@ -580,9 +598,9 @@ export default function VaughanCoMockup() {
         </div>
         <div style={{ ...card, background: sageWash, border: 'none', cursor: 'pointer' }} onClick={() => setSymphonyTab('workbook')}>
           <Gift size={18} color={sage} strokeWidth={1.4} style={{ marginBottom: '10px' }} />
-          <div style={{ fontFamily: serif, fontSize: '15px', marginBottom: '6px' }}>Your <em style={{ color: sage, fontStyle: 'italic' }}>gift</em> book</div>
+          <div style={{ fontFamily: serif, fontSize: '15px', marginBottom: '6px' }}>Your <em style={{ color: brass, fontStyle: 'italic' }}>gift</em> book</div>
           <div style={{ fontSize: '11px', color: textMuted, lineHeight: '1.7', marginBottom: '10px' }}>Liz is curating the documentation of your home. 34 pages so far.</div>
-          <a style={{ ...microLabel, color: sage, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>Preview <ArrowRight size={10} /></a>
+          <a style={{ ...microLabel, color: brass, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>Preview <ArrowRight size={10} /></a>
         </div>
       </div>
     </>
@@ -592,7 +610,7 @@ export default function VaughanCoMockup() {
     <>
       <div style={{ marginBottom: '24px' }}>
         <div style={{ ...sectionLabel, marginBottom: '8px' }}>The gift</div>
-        <h1 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: 0 }}>The Mercer book, <em style={{ color: sage, fontStyle: 'italic' }}>by Liz.</em></h1>
+        <h1 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: 0 }}>The Mercer book, <em style={{ color: brass, fontStyle: 'italic' }}>by Liz.</em></h1>
         <p style={{ fontSize: '12px', color: textMuted, marginTop: '6px' }}>A coffee-table volume documenting your home, from blueprint to keys. Liz hands you the printed copy on move-in day.</p>
       </div>
 
@@ -627,12 +645,12 @@ export default function VaughanCoMockup() {
             <div key={c.n} style={{ padding: '8px 0', borderTop: i === 0 ? 'none' : `1px solid ${borderSoft}` }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
                 <div style={{ fontSize: '11px' }}>
-                  <span style={{ fontFamily: serif, color: sage, fontStyle: 'italic', marginRight: '8px' }}>{c.n}.</span>{c.t}
+                  <span style={{ fontFamily: serif, color: brass, fontStyle: 'italic', marginRight: '8px' }}>{c.n}.</span>{c.t}
                 </div>
                 <div style={{ fontSize: '10px', color: textMuted, ...mono }}>{c.pct}%</div>
               </div>
               <div style={{ height: '2px', background: surfaceAlt, borderRadius: '1px', overflow: 'hidden' }}>
-                <div style={{ width: `${c.pct}%`, height: '100%', background: sage }} />
+                <div style={{ width: `${c.pct}%`, height: '100%', background: brass }} />
               </div>
             </div>
           ))}
@@ -653,7 +671,7 @@ export default function VaughanCoMockup() {
             { icon: HomeIcon, label: 'Care guide', count: '1' },
           ].map(({ icon: Icon, label, count }) => (
             <div key={label} style={{ padding: '12px', background: surfaceAlt, borderRadius: '2px' }}>
-              <Icon size={14} color={sage} strokeWidth={1.4} style={{ marginBottom: '8px' }} />
+              <Icon size={14} color={brass} strokeWidth={1.4} style={{ marginBottom: '8px' }} />
               <div style={{ fontSize: '10px', color: textMuted, marginBottom: '2px' }}>{label}</div>
               <div style={{ fontFamily: serif, fontSize: '18px' }}>{count}</div>
             </div>
@@ -667,7 +685,7 @@ export default function VaughanCoMockup() {
     <>
       <div style={{ marginBottom: '24px' }}>
         <div style={{ ...sectionLabel, marginBottom: '8px' }}>Investment</div>
-        <h1 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: 0 }}>The Mercer <em style={{ color: sage, fontStyle: 'italic' }}>ledger.</em></h1>
+        <h1 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: 0 }}>The Mercer <em style={{ color: brass, fontStyle: 'italic' }}>ledger.</em></h1>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: cols('repeat(2, 1fr)', 'repeat(4, 1fr)'), gap: '10px', marginBottom: '14px' }}>
@@ -675,7 +693,7 @@ export default function VaughanCoMockup() {
           <div key={l} style={{ background: surface, border: `1px solid ${border}`, padding: '14px', borderRadius: '2px' }}>
             <div style={{ ...microLabel, marginBottom: '8px' }}>{l}</div>
             <div style={{ fontFamily: serif, fontSize: isMobile ? '17px' : '22px' }}>{v}</div>
-            {sub && <div style={{ fontSize: '10px', color: sage, marginTop: '4px' }}>{sub}</div>}
+            {sub && <div style={{ fontSize: '10px', color: brass, marginTop: '4px' }}>{sub}</div>}
           </div>
         ))}
       </div>
@@ -701,7 +719,7 @@ export default function VaughanCoMockup() {
             {!isMobile && <div style={{ fontFamily: serif, fontSize: '15px', textAlign: 'right' }}>{inv.amt}</div>}
             <div style={{ textAlign: 'right' }}>
               {isMobile && <div style={{ fontFamily: serif, fontSize: '14px', marginBottom: '2px' }}>{inv.amt}</div>}
-              <div style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, color: inv.paid ? textMuted : sage }}>{inv.status}</div>
+              <div style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, color: inv.paid ? textMuted : brass }}>{inv.status}</div>
             </div>
           </div>
         ))}
@@ -741,13 +759,13 @@ export default function VaughanCoMockup() {
   const AdminSidebar = () => (
     <>
       <Logo size={14} />
-      <div style={{ fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: sage, marginTop: '4px', marginLeft: '2px', fontWeight: 500 }}>Liz's Studio</div>
+      <div style={{ fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: brass, marginTop: '4px', marginLeft: '2px', fontWeight: 500 }}>Liz's Studio</div>
       <nav style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '1px' }}>
         {AdminNav.map(({ id, icon: Icon, label, badge }) => (
-          <div key={id} onClick={() => setAdminTab(id)} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', fontSize: '12px', background: adminTab === id ? sageWash : 'transparent', color: adminTab === id ? (isDark ? sage : sageDeep) : textMuted, cursor: 'pointer', borderRadius: '2px', fontWeight: adminTab === id ? 500 : 400 }}>
+          <div key={id} onClick={() => setAdminTab(id)} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', fontSize: '12px', background: adminTab === id ? brassWash : 'transparent', color: adminTab === id ? (isDark ? brass : brassDeep) : textMuted, cursor: 'pointer', borderRadius: '2px', fontWeight: adminTab === id ? 500 : 400 }}>
             <Icon size={14} strokeWidth={1.4} />
             <span style={{ flex: 1 }}>{label}</span>
-            {badge && <span style={{ background: sage, color: '#121212', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
+            {badge && <span style={{ background: brass, color: '#121212', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
           </div>
         ))}
       </nav>
@@ -762,7 +780,7 @@ export default function VaughanCoMockup() {
             <Menu size={14} color={text} />
           </button>
           <div style={{ fontSize: '11px', fontFamily: serif, fontStyle: 'italic' }}>{AdminNav.find(n => n.id === adminTab)?.label}</div>
-          <div style={{ fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: sage, fontWeight: 500 }}>Studio</div>
+          <div style={{ fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: brass, fontWeight: 500 }}>Studio</div>
         </div>
       )}
 
@@ -824,10 +842,10 @@ export default function VaughanCoMockup() {
           <div key={label} style={{ background: surface, border: `1px solid ${border}`, padding: '13px 14px', borderRadius: '2px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
               <div style={microLabel}>{label}</div>
-              <Icon size={12} color={sage} strokeWidth={1.4} />
+              <Icon size={12} color={brass} strokeWidth={1.4} />
             </div>
             <div style={{ fontFamily: serif, fontSize: isMobile ? '20px' : '24px', marginBottom: '3px' }}>{value}</div>
-            <div style={{ fontSize: '10px', color: sage, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <div style={{ fontSize: '10px', color: brass, display: 'flex', alignItems: 'center', gap: '4px' }}>
               <ArrowUp size={9} /> {delta}
             </div>
           </div>
@@ -838,7 +856,7 @@ export default function VaughanCoMockup() {
         <div style={{ ...card, padding: 0 }}>
           <div style={{ padding: '14px 18px', borderBottom: `1px solid ${borderSoft}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ fontFamily: serif, fontSize: '15px' }}>Active Symphony spaces</div>
-            <a style={{ ...microLabel, color: sage, cursor: 'pointer' }}>All</a>
+            <a style={{ ...microLabel, color: brass, cursor: 'pointer' }}>All</a>
           </div>
           {[
             { name: 'Mercer residence', loc: 'Riverlea', phase: 'III. The Walk', pct: 62, value: '$2.10M', flag: 0 },
@@ -859,7 +877,7 @@ export default function VaughanCoMockup() {
                 <div>
                   <div style={{ fontSize: '10px', color: textMuted, marginBottom: '3px', ...mono }}>{c.pct}%</div>
                   <div style={{ height: '2px', background: surfaceAlt, borderRadius: '1px', overflow: 'hidden' }}>
-                    <div style={{ width: `${c.pct}%`, height: '100%', background: sage }} />
+                    <div style={{ width: `${c.pct}%`, height: '100%', background: brass }} />
                   </div>
                 </div>
               )}
@@ -877,7 +895,7 @@ export default function VaughanCoMockup() {
             { time: '3:30', label: 'Holloway · selections', dur: '90m' },
           ].map((e, i) => (
             <div key={i} style={{ display: 'flex', gap: '12px', padding: '9px 0', borderTop: i === 0 ? 'none' : `1px solid ${borderSoft}` }}>
-              <div style={{ width: '2px', background: sage, borderRadius: '1px' }} />
+              <div style={{ width: '2px', background: brass, borderRadius: '1px' }} />
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '11px', fontWeight: 500 }}>{e.label}</div>
                 <div style={{ fontSize: '10px', color: textMuted, marginTop: '2px' }}>{e.time} · {e.dur}</div>
@@ -906,7 +924,7 @@ export default function VaughanCoMockup() {
                 </div>
               </div>
               <div style={{ height: '2px', background: surfaceAlt, borderRadius: '1px', overflow: 'hidden' }}>
-                <div style={{ width: `${100 - i * 18}%`, height: '100%', background: sage, opacity: 1 - i * 0.1 }} />
+                <div style={{ width: `${100 - i * 18}%`, height: '100%', background: brass, opacity: 1 - i * 0.1 }} />
               </div>
             </div>
           ))}
@@ -915,7 +933,7 @@ export default function VaughanCoMockup() {
         <div style={card}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <div style={{ fontFamily: serif, fontSize: '15px' }}>Live ad performance</div>
-            <a onClick={() => setAdminTab('adhub')} style={{ ...microLabel, color: sage, cursor: 'pointer' }}>Ad Hub →</a>
+            <a onClick={() => setAdminTab('adhub')} style={{ ...microLabel, color: brass, cursor: 'pointer' }}>Ad Hub →</a>
           </div>
           {[
             { plat: 'Meta · Instagram', spend: '$3,840', roas: '5.1×', icon: Instagram, color: '#E4405F' },
@@ -927,7 +945,7 @@ export default function VaughanCoMockup() {
               <p.icon size={13} color={p.color} />
               <div style={{ fontSize: '11px' }}>{p.plat}</div>
               <div style={{ ...mono, fontSize: '11px', color: textMuted }}>{p.spend}</div>
-              <div style={{ ...mono, fontSize: '11px', color: sage, fontWeight: 500 }}>{p.roas}</div>
+              <div style={{ ...mono, fontSize: '11px', color: brass, fontWeight: 500 }}>{p.roas}</div>
             </div>
           ))}
         </div>
@@ -996,14 +1014,14 @@ export default function VaughanCoMockup() {
               </div>
               {isMobile && (
                 <div style={{ display: 'flex', gap: '12px', marginTop: '6px', fontSize: '10px', color: textMuted, ...mono }}>
-                  <span>{c.plat}</span><span>{c.spend}</span><span>{c.leads} leads</span><span style={{ color: sage }}>{c.roas}</span>
+                  <span>{c.plat}</span><span>{c.spend}</span><span>{c.leads} leads</span><span style={{ color: brass }}>{c.roas}</span>
                 </div>
               )}
             </div>
             {!isMobile && <div style={{ fontSize: '11px', color: textMuted }}>{c.plat}</div>}
             {!isMobile && <div style={{ textAlign: 'right', ...mono, fontSize: '11px' }}>{c.spend}</div>}
             {!isMobile && <div style={{ textAlign: 'right', ...mono, fontSize: '11px' }}>{c.leads}</div>}
-            {!isMobile && <div style={{ textAlign: 'right', ...mono, fontSize: '11px', color: sage, fontWeight: 500 }}>{c.roas}</div>}
+            {!isMobile && <div style={{ textAlign: 'right', ...mono, fontSize: '11px', color: brass, fontWeight: 500 }}>{c.roas}</div>}
             <div style={{ display: 'flex', gap: '4px', justifyContent: 'flex-end' }}>
               <button style={{ background: 'transparent', border: `1px solid ${border}`, padding: '4px', cursor: 'pointer', borderRadius: '1px' }}>
                 {c.status === 'live' ? <Pause size={10} color={textMuted} /> : <Play size={10} color={textMuted} />}
@@ -1018,7 +1036,7 @@ export default function VaughanCoMockup() {
         <div style={card}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <div style={{ fontFamily: serif, fontSize: '15px' }}>Audiences</div>
-            <a style={{ ...microLabel, color: sage, cursor: 'pointer' }}>+ New</a>
+            <a style={{ ...microLabel, color: brass, cursor: 'pointer' }}>+ New</a>
           </div>
           {[
             { name: 'Site visitors · 30 day', size: '12,840', src: 'Pixel' },
@@ -1038,7 +1056,7 @@ export default function VaughanCoMockup() {
         <div style={card}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <div style={{ fontFamily: serif, fontSize: '15px' }}>Creative library</div>
-            <a style={{ ...microLabel, color: sage, cursor: 'pointer' }}>+ Upload</a>
+            <a style={{ ...microLabel, color: brass, cursor: 'pointer' }}>+ Upload</a>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
             {['#BE8274', '#C9BFA8', '#B8A89C', '#B59A6A', '#C4A882', '#A89888'].map((hue, i) => (
@@ -1047,7 +1065,7 @@ export default function VaughanCoMockup() {
               </div>
             ))}
           </div>
-          <div style={{ fontSize: '10px', color: textMuted, marginTop: '10px', lineHeight: '1.6' }}>6 creatives · 4 running · pulling from <span style={{ color: sage }}>@vaughanand.co</span></div>
+          <div style={{ fontSize: '10px', color: textMuted, marginTop: '10px', lineHeight: '1.6' }}>6 creatives · 4 running · pulling from <span style={{ color: brass }}>@vaughanand.co</span></div>
         </div>
       </div>
     </>
@@ -1080,7 +1098,7 @@ export default function VaughanCoMockup() {
               </div>
               {isMobile && (
                 <div style={{ display: 'flex', gap: '10px', marginTop: '5px', fontSize: '10px', color: textMuted, ...mono, flexWrap: 'wrap' }}>
-                  <span>{p.events} events</span><span>{p.last}</span>{p.capi && <span style={{ color: sage }}>CAPI</span>}
+                  <span>{p.events} events</span><span>{p.last}</span>{p.capi && <span style={{ color: brass }}>CAPI</span>}
                 </div>
               )}
             </div>
@@ -1171,7 +1189,7 @@ export default function VaughanCoMockup() {
             <div style={{ fontFamily: serif, fontSize: '15px' }}>Invoices</div>
           </div>
           {[
-            { id: '#2026-041', client: 'Mercer', desc: 'Lighting deposit', sub: '$24,820 + $4,180 tax', amt: '$29,000', status: 'Sent', color: sage, paid: false },
+            { id: '#2026-041', client: 'Mercer', desc: 'Lighting deposit', sub: '$24,820 + $4,180 tax', amt: '$29,000', status: 'Sent', color: brass, paid: false },
             { id: '#2026-040', client: 'Holloway', desc: 'Cabinetry', sub: '$12,900 + $1,300 tax', amt: '$14,200', status: 'Overdue', color: accent, paid: false },
             { id: '#2026-039', client: 'Mercer', desc: 'Cabinetry milestone', sub: '$44,300 + $4,200 tax', amt: '$48,500', status: 'Paid', color: textMuted, paid: true },
             { id: '#2026-038', client: 'Bashir', desc: 'Design retainer', sub: '$12,800 · tax exempt', amt: '$12,800', status: 'Paid', color: textMuted, paid: true },
@@ -1275,7 +1293,7 @@ export default function VaughanCoMockup() {
             <div style={{ ...mono, fontSize: '11px', color: textMuted }}>{w.pages} <span style={{ color: textFaint }}>/ ~{w.target} pages</span></div>
             <div>
               <div style={{ height: '2px', background: surfaceAlt, borderRadius: '1px', overflow: 'hidden' }}>
-                <div style={{ width: `${(w.pages / w.target) * 100}%`, height: '100%', background: sage }} />
+                <div style={{ width: `${(w.pages / w.target) * 100}%`, height: '100%', background: brass }} />
               </div>
             </div>
             <div style={{ ...microLabel, color: textMuted, textAlign: cols('left', 'right') }}>Ships {w.ship}</div>
@@ -1305,7 +1323,7 @@ export default function VaughanCoMockup() {
             { src: 'Family notes', n: '8', icon: Heart },
           ].map((a, i) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '20px 1fr auto', gap: '10px', alignItems: 'center', padding: '8px 0', borderTop: i === 0 ? 'none' : `1px solid ${borderSoft}` }}>
-              <a.icon size={12} color={sage} />
+              <a.icon size={12} color={brass} />
               <div style={{ fontSize: '11px' }}>{a.src}</div>
               <div style={{ ...mono, fontSize: '11px', fontWeight: 500 }}>{a.n}</div>
             </div>
@@ -1344,7 +1362,7 @@ export default function VaughanCoMockup() {
               <div style={{ fontFamily: serif, fontSize: '18px' }}>{s.n}</div>
             </div>
             <div style={{ height: '2px', background: surfaceAlt, marginBottom: '8px' }}>
-              <div style={{ width: '60%', height: '100%', background: sage }} />
+              <div style={{ width: '60%', height: '100%', background: brass }} />
             </div>
             <div style={{ fontSize: '10px', color: textMuted, ...mono }}>{s.value} pipeline</div>
           </div>
@@ -1381,9 +1399,9 @@ export default function VaughanCoMockup() {
             {!isMobile && <div style={{ fontSize: '11px', fontFamily: serif, fontStyle: 'italic' }}>{l.stage}</div>}
             {!isMobile && <div style={{ ...mono, fontSize: '11px' }}>{l.val}</div>}
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end' }}>
-              <div style={{ ...mono, fontSize: '11px', fontWeight: 500, color: l.score > 85 ? sage : textMuted }}>{l.score}</div>
+              <div style={{ ...mono, fontSize: '11px', fontWeight: 500, color: l.score > 85 ? brass : textMuted }}>{l.score}</div>
               <div style={{ width: '36px', height: '2px', background: surfaceAlt, borderRadius: '1px', overflow: 'hidden' }}>
-                <div style={{ width: `${l.score}%`, height: '100%', background: l.score > 85 ? sage : textMuted }} />
+                <div style={{ width: `${l.score}%`, height: '100%', background: l.score > 85 ? brass : textMuted }} />
               </div>
             </div>
           </div>
