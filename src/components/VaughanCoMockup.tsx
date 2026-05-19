@@ -52,23 +52,23 @@ export default function VaughanCoMockup() {
 
   const isDark = theme === 'dark';
 
-  // —— Brand tokens ——
-  const sage       = isDark ? '#B5C5B7' : '#9BAA9D';
-  const sageDeep   = '#7E8E80';
-  const sageWash   = isDark ? '#1A211B' : '#EEF1ED';
-  const bg         = isDark ? '#0D0D0B' : '#FBFAF6';
-  const surface    = isDark ? '#141412' : '#FFFFFF';
-  const surfaceAlt = isDark ? '#1B1B19' : '#F3F0E9';
-  const text       = isDark ? '#F1EEE6' : '#1A1A1A';
-  const textMuted  = isDark ? '#9C9A93' : '#6E6B65';
-  const textFaint  = isDark ? '#5E5C57' : '#A8A39A';
-  const border     = isDark ? '#24241F' : '#E5E0D5';
-  const borderSoft = isDark ? '#1A1A18' : '#EEE9DC';
-  const accent     = '#C84A3B';
+  // —— Brand tokens (Maxine Studio palette) ——
+  const sage       = isDark ? '#D4BC8E' : '#B59A6A';
+  const sageDeep   = '#9A7D52';
+  const sageWash   = isDark ? '#1F1B14' : '#F3EDE2';
+  const bg         = isDark ? '#121212' : '#F5F1EC';
+  const surface    = isDark ? '#1A1612' : '#FDFBF8';
+  const surfaceAlt = isDark ? '#231E18' : '#E7E1D8';
+  const text       = isDark ? '#F1EDE6' : '#121212';
+  const textMuted  = isDark ? '#A09890' : '#6B6560';
+  const textFaint  = isDark ? '#5E5850' : '#A8A098';
+  const border     = isDark ? '#2E281F' : '#DDD6C8';
+  const borderSoft = isDark ? '#241F18' : '#EBE5DA';
+  const accent     = '#BE8274';
 
-  const serif = 'Georgia, "Cormorant Garamond", "Times New Roman", serif';
-  const sans  = 'ui-sans-serif, -apple-system, system-ui, sans-serif';
-  const mono  = { fontFamily: 'ui-monospace, "SF Mono", monospace' };
+  const serif = '"Prata", Georgia, "Times New Roman", serif';
+  const sans  = '"Space Grotesk", ui-sans-serif, system-ui, sans-serif';
+  const mono  = { fontFamily: '"JetBrains Mono", ui-monospace, "SF Mono", monospace' };
 
   // —— Responsive helpers ——
   const pad = isMobile ? '20px' : '56px';
@@ -82,7 +82,7 @@ export default function VaughanCoMockup() {
 
   const primaryBtn = { background: text, color: bg, border: 'none', padding: isMobile ? '12px 18px' : '13px 24px', fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '10px', borderRadius: '1px' };
   const ghostBtn = { background: 'transparent', color: text, border: `1px solid ${border}`, padding: isMobile ? '11px 18px' : '12px 24px', fontSize: '10px', letterSpacing: '0.22em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '10px', borderRadius: '1px' };
-  const sageBtn = { ...primaryBtn, background: sage, color: '#0D0D0B' };
+  const sageBtn = { ...primaryBtn, background: sage, color: '#121212' };
 
   const Logo = ({ size = 18, showByline = false }) => (
     <div>
@@ -174,8 +174,8 @@ export default function VaughanCoMockup() {
           </div>
         </div>
         <div style={{ position: 'relative' }}>
-          <div style={{ aspectRatio: '4/5', background: isDark ? '#252321' : '#D8D2C2', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#3A3835' : '#A8A39A' }}>
+          <div style={{ aspectRatio: '4/5', background: isDark ? '#2B211A' : '#DDD6C8', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#3A3228' : '#A8A098' }}>
               <span style={{ fontFamily: serif, fontSize: '13px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Liz, in studio</span>
             </div>
             <div style={{ position: 'absolute', bottom: '14px', left: '14px', right: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
@@ -213,13 +213,13 @@ export default function VaughanCoMockup() {
         <div style={{ display: 'grid', gridTemplateColumns: cols('repeat(2, 1fr)', 'repeat(4, 1fr)'), gap: '10px' }}>
           {[
             { title: 'Powell new build', tag: 'Build', hue: '#C9BFA8' },
-            { title: 'Riverlea kitchen', tag: 'Interior', hue: '#A8B8B0' },
+            { title: 'Riverlea kitchen', tag: 'Interior', hue: '#BE8274' },
             { title: 'Olentangy estate', tag: 'Build', hue: '#B8A89C' },
-            { title: 'Bexley reno', tag: 'Interior', hue: '#9BAA9D' },
+            { title: 'Bexley reno', tag: 'Interior', hue: '#B59A6A' },
           ].map(({ title, tag, hue }) => (
             <div key={title} style={{ aspectRatio: '4/5', background: hue, borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%)' }} />
-              <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.95)', color: '#1A1A1A', padding: '3px 8px', fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px' }}>{tag}</div>
+              <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.95)', color: '#121212', padding: '3px 8px', fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px' }}>{tag}</div>
               <div style={{ position: 'absolute', bottom: '12px', left: '12px', color: 'white', fontFamily: serif, fontSize: '13px', fontStyle: 'italic' }}>{title}</div>
             </div>
           ))}
@@ -262,23 +262,23 @@ export default function VaughanCoMockup() {
 
       {/* Lume */}
       <section style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}` }}>
-        <div style={{ background: '#1A1A18', color: '#F1EEE6', padding: isMobile ? '32px 24px' : '48px', borderRadius: '2px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1.2fr'), gap: cols('28px', '48px'), alignItems: 'center' }}>
+        <div style={{ background: '#2B211A', color: '#F1EDE6', padding: isMobile ? '32px 24px' : '48px', borderRadius: '2px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1.2fr'), gap: cols('28px', '48px'), alignItems: 'center' }}>
           <div>
             <div style={{ ...sectionLabel, color: sage, marginBottom: '14px' }}>Powered by Lume</div>
             <h2 style={{ fontFamily: serif, fontSize: isMobile ? '24px' : '34px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>
               Walk every room <em style={{ color: sage, fontStyle: 'italic' }}>before</em> it's framed.
             </h2>
-            <p style={{ fontSize: '13px', lineHeight: '1.8', color: '#B0ADA5', marginBottom: '24px' }}>
+            <p style={{ fontSize: '13px', lineHeight: '1.8', color: '#B5AA9A', marginBottom: '24px' }}>
               Once Liz structures your blueprints, she builds your interior in Lume. Photoreal 3D, live in your Symphony space.
             </p>
             <button style={sageBtn}>See a Liz walkthrough <ArrowRight size={12} /></button>
           </div>
-          <div style={{ aspectRatio: '5/4', background: '#28282A', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #333' }}>
+          <div style={{ aspectRatio: '5/4', background: '#1A1612', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #3A3228' }}>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Box size={36} color={sage} strokeWidth={0.8} />
             </div>
             <div style={{ position: 'absolute', bottom: '12px', left: '12px', right: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B0ADA5' }}>Riverlea · Primary</div>
+              <div style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B5AA9A' }}>Riverlea · Primary</div>
               <div style={{ fontSize: '9px', color: sage, display: 'flex', gap: '4px', alignItems: 'center', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
                 <Circle size={5} fill={sage} /> Live
               </div>
@@ -305,8 +305,8 @@ export default function VaughanCoMockup() {
             <div style={{ ...microLabel, marginTop: '12px', color: textFaint }}>Liz only sends a few notes a year. No noise.</div>
           </div>
           {!isMobile && (
-            <div style={{ aspectRatio: '4/5', background: isDark ? '#252321' : '#D8D2C2', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ fontFamily: serif, color: isDark ? '#3A3835' : '#888379', textAlign: 'center' }}>
+            <div style={{ aspectRatio: '4/5', background: isDark ? '#2B211A' : '#DDD6C8', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ fontFamily: serif, color: isDark ? '#3A3228' : '#8A7E70', textAlign: 'center' }}>
                 <Book size={28} strokeWidth={0.8} style={{ marginBottom: '8px' }} />
                 <div style={{ fontSize: '11px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Cover preview</div>
               </div>
@@ -336,7 +336,7 @@ export default function VaughanCoMockup() {
             </h3>
             <div style={{ display: 'flex', gap: '4px', marginBottom: '10px', overflow: 'auto' }}>
               {['Mon 19', 'Tue 20', 'Wed 21', 'Thu 22', 'Fri 23'].map((d, i) => (
-                <button key={d} style={{ flex: '1 0 auto', padding: '10px 8px', background: i === 2 ? sage : 'transparent', border: i === 2 ? 'none' : `1px solid ${border}`, color: i === 2 ? '#0D0D0B' : text, cursor: 'pointer', fontSize: '11px', borderRadius: '1px', fontFamily: serif, fontStyle: i === 2 ? 'normal' : 'italic', whiteSpace: 'nowrap' }}>{d}</button>
+                <button key={d} style={{ flex: '1 0 auto', padding: '10px 8px', background: i === 2 ? sage : 'transparent', border: i === 2 ? 'none' : `1px solid ${border}`, color: i === 2 ? '#121212' : text, cursor: 'pointer', fontSize: '11px', borderRadius: '1px', fontFamily: serif, fontStyle: i === 2 ? 'normal' : 'italic', whiteSpace: 'nowrap' }}>{d}</button>
               ))}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px', marginBottom: '14px' }}>
@@ -373,7 +373,7 @@ export default function VaughanCoMockup() {
             {isMobile ? 'Booking late 2026.' : 'Liz is booking late 2026 projects now.'}
           </span>
         </div>
-        <button style={{ background: sage, color: '#0D0D0B', border: 'none', padding: isMobile ? '7px 12px' : '8px 16px', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', display: 'flex', alignItems: 'center', gap: '7px', whiteSpace: 'nowrap', flexShrink: 0 }}>
+        <button style={{ background: sage, color: '#121212', border: 'none', padding: isMobile ? '7px 12px' : '8px 16px', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', display: 'flex', alignItems: 'center', gap: '7px', whiteSpace: 'nowrap', flexShrink: 0 }}>
           {isMobile ? 'Begin' : 'Begin with Liz'} <ArrowRight size={11} />
         </button>
       </div>
@@ -411,7 +411,7 @@ export default function VaughanCoMockup() {
           <div key={id} onClick={() => setSymphonyTab(id)} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', fontSize: '12px', background: symphonyTab === id ? sageWash : 'transparent', color: symphonyTab === id ? (isDark ? sage : sageDeep) : textMuted, cursor: 'pointer', borderRadius: '2px', fontWeight: symphonyTab === id ? 500 : 400 }}>
             <Icon size={14} strokeWidth={1.4} />
             <span style={{ flex: 1 }}>{label}</span>
-            {badge && <span style={{ background: sage, color: '#0D0D0B', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
+            {badge && <span style={{ background: sage, color: '#121212', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
           </div>
         ))}
       </nav>
@@ -419,7 +419,7 @@ export default function VaughanCoMockup() {
       <div style={{ marginTop: '24px', padding: '14px', background: surfaceAlt, borderRadius: '2px' }}>
         <div style={{ ...microLabel, marginBottom: '10px' }}>Your designer</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0D0D0B', fontWeight: 500, fontSize: '11px', fontFamily: serif }}>LV</div>
+          <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: sage, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#121212', fontWeight: 500, fontSize: '11px', fontFamily: serif }}>LV</div>
           <div>
             <div style={{ fontSize: '12px', fontWeight: 500 }}>Liz Vaughan</div>
             <div style={{ fontSize: '10px', color: textMuted }}>Principal</div>
@@ -512,14 +512,14 @@ export default function VaughanCoMockup() {
 
       <div style={{ display: 'grid', gridTemplateColumns: cols('1fr', '1.3fr 1fr'), gap: '14px', marginBottom: '14px' }}>
         <div style={{ ...card, padding: 0, overflow: 'hidden' }}>
-          <div style={{ aspectRatio: '16/10', background: isDark ? '#222220' : '#D5D0C5', position: 'relative' }}>
+          <div style={{ aspectRatio: '16/10', background: isDark ? '#231E18' : '#DDD6C8', position: 'relative' }}>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Box size={32} color={sage} strokeWidth={0.8} />
             </div>
-            <div style={{ position: 'absolute', top: '11px', left: '11px', background: 'rgba(255,255,255,0.95)', color: '#1A1A1A', padding: '4px 9px', fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px' }}>Lume · Live</div>
+            <div style={{ position: 'absolute', top: '11px', left: '11px', background: 'rgba(255,255,255,0.95)', color: '#121212', padding: '4px 9px', fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px' }}>Lume · Live</div>
             <div style={{ position: 'absolute', bottom: '11px', left: '11px', right: '11px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ color: 'white', fontFamily: serif, fontSize: '12px', fontStyle: 'italic', textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>Primary suite — final render</div>
-              <button style={{ background: 'white', color: '#1A1A1A', border: 'none', padding: '5px 10px', fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <button style={{ background: 'white', color: '#121212', border: 'none', padding: '5px 10px', fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', cursor: 'pointer', fontWeight: 500, borderRadius: '1px', display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <Play size={9} /> Walk
               </button>
             </div>
@@ -598,8 +598,8 @@ export default function VaughanCoMockup() {
 
       <div style={{ display: 'grid', gridTemplateColumns: cols('1fr', '1.5fr 1fr'), gap: '14px', marginBottom: '14px' }}>
         <div style={{ ...card, padding: 0, overflow: 'hidden' }}>
-          <div style={{ aspectRatio: '4/3', background: isDark ? '#252321' : '#E5DFC9', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ fontFamily: serif, color: isDark ? '#444' : '#A39A85', textAlign: 'center' }}>
+          <div style={{ aspectRatio: '4/3', background: isDark ? '#2B211A' : '#E7E1D8', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ fontFamily: serif, color: isDark ? '#3A3228' : '#9A8E7A', textAlign: 'center' }}>
               <Book size={28} strokeWidth={0.6} style={{ marginBottom: '8px' }} />
               <div style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Page 14 preview</div>
             </div>
@@ -747,7 +747,7 @@ export default function VaughanCoMockup() {
           <div key={id} onClick={() => setAdminTab(id)} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '9px 11px', fontSize: '12px', background: adminTab === id ? sageWash : 'transparent', color: adminTab === id ? (isDark ? sage : sageDeep) : textMuted, cursor: 'pointer', borderRadius: '2px', fontWeight: adminTab === id ? 500 : 400 }}>
             <Icon size={14} strokeWidth={1.4} />
             <span style={{ flex: 1 }}>{label}</span>
-            {badge && <span style={{ background: sage, color: '#0D0D0B', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
+            {badge && <span style={{ background: sage, color: '#121212', fontSize: '9px', padding: '1px 6px', borderRadius: '8px', fontWeight: 500 }}>{badge}</span>}
           </div>
         ))}
       </nav>
@@ -1041,9 +1041,9 @@ export default function VaughanCoMockup() {
             <a style={{ ...microLabel, color: sage, cursor: 'pointer' }}>+ Upload</a>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
-            {['#A8B8B0', '#C9BFA8', '#B8A89C', '#9BAA9D', '#C2B5A0', '#A5A89C'].map((hue, i) => (
+            {['#BE8274', '#C9BFA8', '#B8A89C', '#B59A6A', '#C4A882', '#A89888'].map((hue, i) => (
               <div key={i} style={{ aspectRatio: '1', background: hue, borderRadius: '1px', position: 'relative', cursor: 'pointer' }}>
-                <div style={{ position: 'absolute', top: '4px', right: '4px', background: 'rgba(255,255,255,0.95)', padding: '1px 5px', fontSize: '8px', letterSpacing: '0.1em', fontWeight: 500, borderRadius: '1px', color: '#1A1A1A' }}>{i < 4 ? 'LIVE' : 'DRAFT'}</div>
+                <div style={{ position: 'absolute', top: '4px', right: '4px', background: 'rgba(255,255,255,0.95)', padding: '1px 5px', fontSize: '8px', letterSpacing: '0.1em', fontWeight: 500, borderRadius: '1px', color: '#121212' }}>{i < 4 ? 'LIVE' : 'DRAFT'}</div>
               </div>
             ))}
           </div>
@@ -1204,7 +1204,7 @@ export default function VaughanCoMockup() {
             <div style={microLabel}>Invoice preview · #2026-041</div>
             <Eye size={12} color={textMuted} />
           </div>
-          <div style={{ padding: '20px', background: isDark ? '#0D0D0B' : '#FBFAF6' }}>
+          <div style={{ padding: '20px', background: isDark ? '#121212' : '#F5F1EC' }}>
             <Logo size={12} />
             <div style={{ ...microLabel, marginTop: '4px', color: textFaint, marginBottom: '18px' }}>By Liz Vaughan</div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
