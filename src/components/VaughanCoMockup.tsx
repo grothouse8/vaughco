@@ -199,16 +199,16 @@ export default function VaughanCoMockup() {
           <p style={{ fontSize: isMobile ? '14px' : '15px', lineHeight: '1.85', color: textMuted, maxWidth: '480px', margin: '0 0 28px' }}>
             Liz Vaughan has designed and built more than 180 custom homes across Central Ohio. Each one begins the same way — a conversation, a blueprint, a walk through your house in three dimensions before a single stud goes up.
           </p>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '32px', flexWrap: 'wrap' }}>
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }} style={{ display: 'flex', gap: '8px', marginBottom: '32px', flexWrap: 'wrap' }}>
             <button style={primaryBtn}>Begin with Liz <ArrowRight size={12} /></button>
             <button style={ghostBtn}>The portfolio</button>
-          </div>
+          </motion.div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: isMobile ? '12px' : '24px', paddingTop: '28px', borderTop: `1px solid ${borderSoft}` }}>
-            {[['23', 'Years'], ['180+', 'Homes'], ['$2.4M', 'Avg.'], ['4.9', 'Score']].map(([n, l]) => (
-              <div key={l}>
+            {[['23', 'Years'], ['180+', 'Homes'], ['$2.4M', 'Avg.'], ['4.9', 'Score']].map(([n, l], i) => (
+              <motion.div key={l} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 + i * 0.12, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}>
                 <div style={{ fontFamily: serif, fontSize: isMobile ? '18px' : '24px', fontWeight: 400, marginBottom: '4px' }}>{n}</div>
                 <div style={{ ...microLabel, fontSize: '9px' }}>{l}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -217,10 +217,9 @@ export default function VaughanCoMockup() {
           <motion.div animate={{ y: [0, -8, 0, 4, 0], x: [0, 6, 0, -4, 0], opacity: [0.12, 0.22, 0.12] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' as const }} style={{ position: 'absolute', top: isMobile ? '-20px' : '-40px', right: isMobile ? '-20px' : '-30px', width: isMobile ? '120px' : '180px', height: isMobile ? '120px' : '180px', borderRadius: '50%', background: brass, filter: isMobile ? 'blur(50px)' : 'blur(80px)', opacity: isMobile ? 0.2 : 0.15, pointerEvents: 'none' as const, zIndex: 0 }} />
           <motion.div animate={{ y: [0, -6, 0, 3, 0], x: [0, 5, 0, -3, 0], opacity: [0.08, 0.16, 0.08] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' as const, delay: 3 }} style={{ position: 'absolute', bottom: isMobile ? '20px' : '40px', left: isMobile ? '-30px' : '-50px', width: isMobile ? '100px' : '140px', height: isMobile ? '100px' : '140px', borderRadius: '50%', background: sage, filter: isMobile ? 'blur(45px)' : 'blur(70px)', opacity: isMobile ? 0.15 : 0.1, pointerEvents: 'none' as const, zIndex: 0 }} />
           <motion.div animate={float(0, isMobile ? 10 : 5, isMobile ? 7 : 9)} style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ aspectRatio: '4/5', background: isDark ? '#2B211A' : '#DDD6C8', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#3A3228' : '#A8A098' }}>
-                <span style={{ fontFamily: serif, fontSize: '13px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Liz, in studio</span>
-              </div>
+            <div style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
+              <motion.img src="/images/liz-portrait.jpg" alt="Liz Vaughan in her design studio" whileHover={{ scale: 1.04 }} transition={{ duration: 0.6, ease: 'easeOut' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', pointerEvents: 'none' as const }} />
               <div style={{ position: 'absolute', bottom: '14px', left: '14px', right: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
                   <div style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)', marginBottom: '4px' }}>Portrait by</div>
@@ -245,10 +244,10 @@ export default function VaughanCoMockup() {
       <section style={{ padding: `${padY} ${pad}`, background: surfaceAlt }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
           <div>
-            <div style={{ ...sectionLabel, marginBottom: '10px' }}>From the studio</div>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '28px', fontWeight: 400, margin: 0, letterSpacing: '-0.005em' }}>
+            <motion.div {...fadeUp} style={{ ...sectionLabel, marginBottom: '10px' }}>From the studio</motion.div>
+            <motion.h2 {...fadeUp} style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '28px', fontWeight: 400, margin: 0, letterSpacing: '-0.005em' }}>
               Recent work, <em style={{ color: brass, fontStyle: 'italic' }}>@vaughanand.co</em>
-            </h2>
+            </motion.h2>
           </div>
           <a style={{ ...microLabel, color: text, display: 'inline-flex', alignItems: 'center', gap: '7px', cursor: 'pointer' }}>
             <Instagram size={12} /> Follow Liz
@@ -256,15 +255,16 @@ export default function VaughanCoMockup() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: cols('repeat(2, 1fr)', 'repeat(4, 1fr)'), gap: '10px' }}>
           {[
-            { title: 'Powell new build', tag: 'Build', hue: '#C9BFA8' },
-            { title: 'Riverlea kitchen', tag: 'Interior', hue: '#BE8274' },
-            { title: 'Olentangy estate', tag: 'Build', hue: '#B8A89C' },
-            { title: 'Bexley reno', tag: 'Interior', hue: '#B59A6A' },
-          ].map(({ title, tag, hue }, i) => (
-            <motion.div key={title} {...stagger(i)} whileHover={{ y: -4, transition: { duration: 0.3 } }} style={{ aspectRatio: '4/5', background: hue, borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%)' }} />
-              <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.95)', color: '#121212', padding: '3px 8px', fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px' }}>{tag}</div>
-              <div style={{ position: 'absolute', bottom: '12px', left: '12px', color: 'white', fontFamily: serif, fontSize: '13px', fontStyle: 'italic' }}>{title}</div>
+            { title: 'Powell new build', tag: 'Build', img: '/images/powell-build.jpg' },
+            { title: 'Riverlea kitchen', tag: 'Interior', img: '/images/riverlea-kitchen.jpg' },
+            { title: 'Olentangy estate', tag: 'Build', img: '/images/olentangy-estate.jpg' },
+            { title: 'Bexley reno', tag: 'Interior', img: '/images/bexley-reno.jpg' },
+          ].map(({ title, tag, img }, i) => (
+            <motion.div key={title} {...stagger(i)} whileHover={{ y: -6, transition: { duration: 0.4 } }} style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
+              <motion.img src={img} alt={title} whileHover={{ scale: 1.06 }} transition={{ duration: 0.6, ease: 'easeOut' }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%)', pointerEvents: 'none' as const }} />
+              <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.92)', color: '#121212', padding: '3px 8px', fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px', backdropFilter: 'blur(8px)' }}>{tag}</div>
+              <div style={{ position: 'absolute', bottom: '12px', left: '12px', color: 'white', fontFamily: serif, fontSize: '13px', fontStyle: 'italic', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>{title}</div>
             </motion.div>
           ))}
         </div>
@@ -277,8 +277,8 @@ export default function VaughanCoMockup() {
       <section style={{ padding: `${isMobile ? '56px' : '88px'} ${pad}` }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols('1fr', '1fr 2fr'), gap: cols('32px', '64px'), alignItems: 'flex-start' }}>
           <div>
-            <div style={{ ...sectionLabel, marginBottom: '14px' }}>How Liz works</div>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? '28px' : '38px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>The <em style={{ color: brass, fontStyle: 'italic' }}>Liz</em> Method.</h2>
+            <motion.div {...fadeUp} style={{ ...sectionLabel, marginBottom: '14px' }}>How Liz works</motion.div>
+            <motion.h2 {...fadeUp} style={{ fontFamily: serif, fontSize: isMobile ? '28px' : '38px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>The <em style={{ color: brass, fontStyle: 'italic' }}>Liz</em> Method.</motion.h2>
             <p style={{ fontSize: '13px', lineHeight: '1.85', color: textMuted, marginBottom: '20px' }}>
               Every home Liz builds moves through five careful steps. Five movements, one composition — yours.
             </p>
@@ -308,21 +308,24 @@ export default function VaughanCoMockup() {
       <section style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}` }}>
         <div style={{ background: '#2B211A', color: '#F1EDE6', padding: isMobile ? '32px 24px' : '48px', borderRadius: '2px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1.2fr'), gap: cols('28px', '48px'), alignItems: 'center' }}>
           <div>
-            <div style={{ ...sectionLabel, color: brass, marginBottom: '14px' }}>Powered by Lume</div>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? '24px' : '34px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>
+            <motion.div {...fadeUp} style={{ ...sectionLabel, color: brass, marginBottom: '14px' }}>Powered by Lume</motion.div>
+            <motion.h2 {...fadeUp} style={{ fontFamily: serif, fontSize: isMobile ? '24px' : '34px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>
               Walk every room <em style={{ color: brass, fontStyle: 'italic' }}>before</em> it's framed.
-            </h2>
+            </motion.h2>
             <p style={{ fontSize: '13px', lineHeight: '1.8', color: '#B5AA9A', marginBottom: '24px' }}>
               Once Liz structures your blueprints, she builds your interior in Lume. Photoreal 3D, live in your Symphony space.
             </p>
             <button style={brassBtn}>See a Liz walkthrough <ArrowRight size={12} /></button>
           </div>
-          <div style={{ aspectRatio: '5/4', background: '#1A1612', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #3A3228' }}>
-            <motion.div animate={{ ...float(0, 4, 7), rotateY: [0, 8, 0, -8, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Box size={36} color={brass} strokeWidth={0.8} />
+          <div style={{ aspectRatio: '5/4', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #3A3228' }}>
+            <motion.img src="/images/lumebox-primary.jpg" alt="Riverlea primary bedroom 3D walkthrough" initial={{ scale: 1.08 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%)', pointerEvents: 'none' as const }} />
+            <motion.div animate={float(0, 3, 6)} style={{ position: 'absolute', top: '14px', right: '14px', background: 'rgba(26,22,18,0.75)', backdropFilter: 'blur(12px)', borderRadius: '2px', padding: '6px 10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Box size={14} color={brass} strokeWidth={1} />
+              <span style={{ fontSize: '9px', letterSpacing: '0.15em', textTransform: 'uppercase', color: brass }}>Lume 3D</span>
             </motion.div>
             <div style={{ position: 'absolute', bottom: '12px', left: '12px', right: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B5AA9A' }}>Riverlea · Primary</div>
+              <div style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B5AA9A', textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>Riverlea · Primary</div>
               <div style={{ fontSize: '9px', color: sage, display: 'flex', gap: '4px', alignItems: 'center', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
                 <Circle size={5} fill={sage} /> Live
               </div>
@@ -335,10 +338,10 @@ export default function VaughanCoMockup() {
       <section style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}` }}>
         <div style={{ ...card, padding: isMobile ? '28px 24px' : '40px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1fr'), gap: cols('24px', '48px'), alignItems: 'center', background: surfaceAlt, border: 'none' }}>
           <div>
-            <div style={{ ...sectionLabel, marginBottom: '12px' }}>The inspiration book</div>
-            <h2 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: '0 0 14px', lineHeight: '1.15' }}>
+            <motion.div {...fadeUp} style={{ ...sectionLabel, marginBottom: '12px' }}>The inspiration book</motion.div>
+            <motion.h2 {...fadeUp} style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '30px', fontWeight: 400, margin: '0 0 14px', lineHeight: '1.15' }}>
               Get Liz's <em style={{ color: brass, fontStyle: 'italic' }}>2026</em> inspiration book.
-            </h2>
+            </motion.h2>
             <p style={{ fontSize: '13px', lineHeight: '1.8', color: textMuted, marginBottom: '20px' }}>
               48 pages. Six homes, hand-selected. Liz's commentary on each. Where she found the stone. Why this faucet. How that ceiling.
             </p>
@@ -349,12 +352,9 @@ export default function VaughanCoMockup() {
             <div style={{ ...microLabel, marginTop: '12px', color: textFaint }}>Liz only sends a few notes a year. No noise.</div>
           </div>
           {!isMobile && (
-            <div style={{ aspectRatio: '4/5', background: isDark ? '#2B211A' : '#DDD6C8', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ fontFamily: serif, color: isDark ? '#3A3228' : '#8A7E70', textAlign: 'center' }}>
-                <Book size={28} strokeWidth={0.8} style={{ marginBottom: '8px' }} />
-                <div style={{ fontSize: '11px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Cover preview</div>
-              </div>
-            </div>
+            <motion.div initial={{ opacity: 0, y: 20, rotateY: -8 }} whileInView={{ opacity: 1, y: 0, rotateY: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }} style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.1)' }}>
+              <img src="/images/inspiration-book.jpg" alt="Vaughan + Co. 2026 Inspiration Book" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </motion.div>
           )}
         </div>
       </section>
@@ -362,7 +362,7 @@ export default function VaughanCoMockup() {
       {/* Symphony + Booking */}
       <section style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}` }}>
         <div style={{ display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1fr'), gap: '16px' }}>
-          <div style={{ ...card, padding: isMobile ? '28px 24px' : '40px', background: sageWash, border: 'none' }}>
+          <motion.div {...stagger(0)} style={{ ...card, padding: isMobile ? '28px 24px' : '40px', background: sageWash, border: 'none' }}>
             <Music size={20} color={sage} strokeWidth={1.2} style={{ marginBottom: '18px' }} />
             <div style={{ ...sectionLabel, marginBottom: '10px' }}>Symphony — by Liz</div>
             <h3 style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '26px', fontWeight: 400, margin: '0 0 12px', lineHeight: '1.15' }}>
@@ -372,8 +372,8 @@ export default function VaughanCoMockup() {
               Every client gets a private studio with Liz — blueprints, 3D walks, selections, invoices, and her direct line.
             </p>
             <a style={{ ...microLabel, color: brass, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>Tour a Symphony space <ArrowRight size={11} /></a>
-          </div>
-          <div style={{ ...card, padding: isMobile ? '24px' : '32px' }}>
+          </motion.div>
+          <motion.div {...stagger(1)} style={{ ...card, padding: isMobile ? '24px' : '32px' }}>
             <div style={{ ...sectionLabel, marginBottom: '10px' }}>Begin a conversation</div>
             <h3 style={{ fontFamily: serif, fontSize: isMobile ? '20px' : '22px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.2' }}>
               30 minutes with <em style={{ color: brass, fontStyle: 'italic' }}>Liz.</em>
@@ -390,14 +390,19 @@ export default function VaughanCoMockup() {
             </div>
             <button style={{ ...primaryBtn, width: '100%', justifyContent: 'center', padding: '13px' }}>Book with Liz <ArrowRight size={12} /></button>
             <div style={{ ...microLabel, marginTop: '12px', color: textFaint, textAlign: 'center' }}>614.323.0568 · liz@vaughanand.co</div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Pull quote */}
-      <section style={{ padding: `0 ${pad} ${isMobile ? '64px' : '96px'}`, textAlign: 'center' }}>
-        <motion.div {...fadeUp} style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <div style={{ fontFamily: serif, fontSize: isMobile ? '20px' : '32px', fontStyle: 'italic', lineHeight: '1.4', color: text, marginBottom: '20px' }}>
+      {/* Pull quote with parallax background */}
+      <section style={{ position: 'relative', overflow: 'hidden', padding: `${isMobile ? '72px' : '120px'} ${pad}`, textAlign: 'center' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <motion.img src="/images/bexley-reno.jpg" alt="" initial={{ scale: 1.15 }} whileInView={{ scale: 1.05 }} viewport={{ once: true }} transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(2px)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: isDark ? 'rgba(18,18,18,0.88)' : 'rgba(245,241,236,0.88)' }} />
+        </div>
+        <motion.div {...fadeUp} style={{ maxWidth: '720px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div style={{ width: '40px', height: '1px', background: brass, margin: '0 auto 28px' }} />
+          <div style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '34px', fontStyle: 'italic', lineHeight: '1.35', color: text, marginBottom: '24px' }}>
             "Liz didn't build us a house. She built our family a home, and then handed us a book to remember how it happened."
           </div>
           <div style={microLabel}>The Mercer family · Riverlea</div>
