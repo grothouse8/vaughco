@@ -46,9 +46,15 @@ export default function VaughanCoMockup() {
 
   useEffect(() => {
     if (musicTriggered) return;
-    const onScroll = () => { setMusicPlaying(true); setMusicTriggered(true); };
-    window.addEventListener('scroll', onScroll, { once: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const trigger = () => { setMusicPlaying(true); setMusicTriggered(true); };
+    window.addEventListener('scroll', trigger, { once: true });
+    window.addEventListener('touchstart', trigger, { once: true });
+    window.addEventListener('click', trigger, { once: true });
+    return () => {
+      window.removeEventListener('scroll', trigger);
+      window.removeEventListener('touchstart', trigger);
+      window.removeEventListener('click', trigger);
+    };
   }, [musicTriggered]);
 
   useEffect(() => {
