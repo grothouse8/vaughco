@@ -95,6 +95,33 @@ export default function VaughanCoMockup() {
     transition: { ...fadeUp.transition, delay: i * (isMobile ? 0.18 : 0.1) },
   });
 
+  // —— Scroll-linked parallax ——
+  const heroRef = useRef(null);
+  const heroScroll = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const heroTextY = useTransform(heroScroll.scrollYProgress, [0, 1], [0, -60]);
+  const heroImgY = useTransform(heroScroll.scrollYProgress, [0, 1], [0, 40]);
+  const heroImgRotate = useTransform(heroScroll.scrollYProgress, [0, 1], [0, 3]);
+  const heroImgScale = useTransform(heroScroll.scrollYProgress, [0, 0.5], [1, 1.05]);
+
+  const reelRef = useRef(null);
+  const reelScroll = useScroll({ target: reelRef, offset: ['start end', 'end start'] });
+  const reelY = useTransform(reelScroll.scrollYProgress, [0, 1], [60, -30]);
+
+  const lumeRef = useRef(null);
+  const lumeScroll = useScroll({ target: lumeRef, offset: ['start end', 'end start'] });
+  const lumeRotateX = useTransform(lumeScroll.scrollYProgress, [0, 0.5, 1], [8, 0, -4]);
+  const lumeScale = useTransform(lumeScroll.scrollYProgress, [0, 0.5], [0.92, 1]);
+
+  const bookRef = useRef(null);
+  const bookScroll = useScroll({ target: bookRef, offset: ['start end', 'end start'] });
+  const bookRotateY = useTransform(bookScroll.scrollYProgress, [0, 0.5, 1], [-12, 0, 6]);
+  const bookScale = useTransform(bookScroll.scrollYProgress, [0, 0.5], [0.9, 1]);
+
+  const quoteRef = useRef(null);
+  const quoteScroll = useScroll({ target: quoteRef, offset: ['start end', 'end start'] });
+  const quoteBgY = useTransform(quoteScroll.scrollYProgress, [0, 1], [-40, 40]);
+  const quoteTextScale = useTransform(quoteScroll.scrollYProgress, [0.2, 0.5], [0.92, 1]);
+
   // —— Responsive helpers ——
   const pad = isMobile ? '20px' : '56px';
   const padY = isMobile ? '40px' : '64px';
@@ -192,8 +219,8 @@ export default function VaughanCoMockup() {
       )}
 
       {/* Hero */}
-      <section style={{ padding: isMobile ? `40px ${pad} 56px` : '64px 56px 96px', display: 'grid', gridTemplateColumns: cols('1fr', '1.15fr 1fr'), gap: cols('40px', '56px'), alignItems: 'center' }}>
-        <div>
+      <section ref={heroRef} style={{ padding: isMobile ? `40px ${pad} 56px` : '64px 56px 96px', display: 'grid', gridTemplateColumns: cols('1fr', '1.15fr 1fr'), gap: cols('40px', '56px'), alignItems: 'center', overflow: 'hidden' }}>
+        <motion.div style={{ y: heroTextY }}>
           <div style={{ ...sectionLabel, marginBottom: isMobile ? '20px' : '28px' }}>Liz Vaughan · CEO + Principal Designer</div>
           <motion.h1 {...fadeUp} style={{ fontFamily: serif, fontSize: isMobile ? '40px' : '64px', lineHeight: '1.02', fontWeight: 400, margin: '0 0 24px', letterSpacing: '-0.015em' }}>
             Designed by <em style={{ color: brass, fontStyle: 'italic' }}>Liz.</em><br />Built for your family.
@@ -213,8 +240,8 @@ export default function VaughanCoMockup() {
               </motion.div>
             ))}
           </div>
-        </div>
-        <div style={{ position: 'relative' }}>
+        </motion.div>
+        <motion.div style={{ position: 'relative', y: heroImgY, rotate: heroImgRotate, scale: heroImgScale }}>
           {/* Background orbs — large, visible, dreamy */}
           <motion.div animate={{ y: [0, -20, 0, 12, 0], x: [0, 15, 0, -10, 0], opacity: [0.18, 0.35, 0.18] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' as const }} style={{ position: 'absolute', top: isMobile ? '-40px' : '-40px', right: isMobile ? '-40px' : '-30px', width: isMobile ? '200px' : '240px', height: isMobile ? '200px' : '240px', borderRadius: '50%', background: `radial-gradient(circle, ${brass}, transparent 70%)`, filter: isMobile ? 'blur(40px)' : 'blur(60px)', pointerEvents: 'none' as const, zIndex: 0 }} />
           <motion.div animate={{ y: [0, -15, 0, 8, 0], x: [0, 12, 0, -8, 0], opacity: [0.12, 0.28, 0.12] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' as const, delay: 2 }} style={{ position: 'absolute', bottom: isMobile ? '-20px' : '40px', left: isMobile ? '-50px' : '-50px', width: isMobile ? '180px' : '200px', height: isMobile ? '180px' : '200px', borderRadius: '50%', background: `radial-gradient(circle, ${sage}, transparent 70%)`, filter: isMobile ? 'blur(35px)' : 'blur(50px)', pointerEvents: 'none' as const, zIndex: 0 }} />
@@ -251,11 +278,11 @@ export default function VaughanCoMockup() {
               <span>Columbus Monthly</span><span style={{ color: textFaint }}>·</span><span>614</span><span style={{ color: textFaint }}>·</span><span>Dwell</span>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Reel */}
-      <section style={{ padding: `${padY} ${pad}`, background: surfaceAlt }}>
+      <section ref={reelRef} style={{ padding: `${padY} ${pad}`, background: surfaceAlt, overflow: 'hidden' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
           <div>
             <motion.div {...fadeUp} style={{ ...sectionLabel, marginBottom: '10px' }}>From the studio</motion.div>
@@ -274,7 +301,7 @@ export default function VaughanCoMockup() {
             { title: 'Olentangy estate', tag: 'Build', img: '/images/olentangy-estate.jpg' },
             { title: 'Bexley reno', tag: 'Interior', img: '/images/bexley-reno.jpg' },
           ].map(({ title, tag, img }, i) => (
-            <motion.div key={title} {...stagger(i)} whileHover={{ y: -8 }} whileTap={{ scale: 0.97 }} style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
+            <motion.div key={title} {...stagger(i)} whileHover={{ y: -10, rotateY: 4, rotateX: -2, scale: 1.02 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4 }} style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer', perspective: '800px', transformStyle: 'preserve-3d' as const }}>
               <motion.img src={img} alt={title} initial={{ scale: 1.2 }} whileInView={{ scale: 1.05 }} viewport={{ once: true }} transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: i * 0.1 }} whileHover={{ scale: 1.1 }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%)', pointerEvents: 'none' as const }} />
               <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.92)', color: '#121212', padding: '3px 8px', fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px', backdropFilter: 'blur(8px)' }}>{tag}</div>
@@ -319,8 +346,8 @@ export default function VaughanCoMockup() {
       </section>
 
       {/* Lume */}
-      <section style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}` }}>
-        <div style={{ background: '#2B211A', color: '#F1EDE6', padding: isMobile ? '32px 24px' : '48px', borderRadius: '2px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1.2fr'), gap: cols('28px', '48px'), alignItems: 'center' }}>
+      <section ref={lumeRef} style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}`, perspective: '1200px' }}>
+        <motion.div style={{ background: '#2B211A', color: '#F1EDE6', padding: isMobile ? '32px 24px' : '48px', borderRadius: '2px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1.2fr'), gap: cols('28px', '48px'), alignItems: 'center', rotateX: lumeRotateX, scale: lumeScale }}>
           <div>
             <motion.div {...fadeUp} style={{ ...sectionLabel, color: brass, marginBottom: '14px' }}>Powered by Lume</motion.div>
             <motion.h2 {...fadeUp} style={{ fontFamily: serif, fontSize: isMobile ? '24px' : '34px', fontWeight: 400, margin: '0 0 16px', lineHeight: '1.1' }}>
@@ -345,11 +372,11 @@ export default function VaughanCoMockup() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Lead magnet */}
-      <section style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}` }}>
+      <section ref={bookRef} style={{ padding: `0 ${pad} ${isMobile ? '56px' : '88px'}`, perspective: '1000px' }}>
         <div style={{ ...card, padding: isMobile ? '28px 24px' : '40px', display: 'grid', gridTemplateColumns: cols('1fr', '1fr 1fr'), gap: cols('24px', '48px'), alignItems: 'center', background: surfaceAlt, border: 'none' }}>
           <div>
             <motion.div {...fadeUp} style={{ ...sectionLabel, marginBottom: '12px' }}>The inspiration book</motion.div>
@@ -366,7 +393,7 @@ export default function VaughanCoMockup() {
             <div style={{ ...microLabel, marginTop: '12px', color: textFaint }}>Liz only sends a few notes a year. No noise.</div>
           </div>
           {!isMobile && (
-            <motion.div initial={{ opacity: 0, y: 20, rotateY: -8 }} whileInView={{ opacity: 1, y: 0, rotateY: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }} style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.1)' }}>
+            <motion.div style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.1)', rotateY: bookRotateY, scale: bookScale }}>
               <img src="/images/inspiration-book.jpg" alt="Vaughan + Co. 2026 Inspiration Book" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </motion.div>
           )}
@@ -409,13 +436,13 @@ export default function VaughanCoMockup() {
       </section>
 
       {/* Pull quote with parallax background */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: `${isMobile ? '72px' : '120px'} ${pad}`, textAlign: 'center' }}>
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <motion.img src="/images/bexley-reno.jpg" alt="" animate={{ scale: [1.15, 1.05, 1.15], x: [0, -10, 0] }} transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' as const }} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(2px)' }} />
-          <div style={{ position: 'absolute', inset: 0, background: isDark ? 'rgba(18,18,18,0.88)' : 'rgba(245,241,236,0.88)' }} />
-        </div>
-        <motion.div {...fadeUp} style={{ maxWidth: '720px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <div style={{ width: '40px', height: '1px', background: brass, margin: '0 auto 28px' }} />
+      <section ref={quoteRef} style={{ position: 'relative', overflow: 'hidden', padding: `${isMobile ? '72px' : '120px'} ${pad}`, textAlign: 'center' }}>
+        <motion.div style={{ position: 'absolute', inset: '-60px', zIndex: 0, y: quoteBgY }}>
+          <motion.img src="/images/bexley-reno.jpg" alt="" animate={{ scale: [1.2, 1.08, 1.2] }} transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' as const }} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(2px)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: isDark ? 'rgba(18,18,18,0.85)' : 'rgba(245,241,236,0.85)' }} />
+        </motion.div>
+        <motion.div {...fadeUp} style={{ maxWidth: '720px', margin: '0 auto', position: 'relative', zIndex: 1, scale: quoteTextScale }}>
+          <motion.div animate={{ rotate: [0, 180, 360] }} transition={{ duration: 20, repeat: Infinity, ease: 'linear' as const }} style={{ width: '40px', height: '1px', background: brass, margin: '0 auto 28px' }} />
           <div style={{ fontFamily: serif, fontSize: isMobile ? '22px' : '34px', fontStyle: 'italic', lineHeight: '1.35', color: text, marginBottom: '24px' }}>
             "Liz didn't build us a house. She built our family a home, and then handed us a book to remember how it happened."
           </div>
