@@ -83,14 +83,14 @@ export default function VaughanCoMockup() {
     transition: { duration: dur, repeat: Infinity, ease: 'easeInOut' as const, delay },
   });
   const fadeUp = {
-    initial: { opacity: 0, y: 24 },
+    initial: { opacity: 0, y: isMobile ? 32 : 24 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-60px' },
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    viewport: { once: true, margin: '-40px' },
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   };
   const stagger = (i: number) => ({
     ...fadeUp,
-    transition: { ...fadeUp.transition, delay: i * 0.1 },
+    transition: { ...fadeUp.transition, delay: i * (isMobile ? 0.15 : 0.1) },
   });
 
   // —— Responsive helpers ——
@@ -214,13 +214,9 @@ export default function VaughanCoMockup() {
         </div>
         <div style={{ position: 'relative' }}>
           {/* Background orbs */}
-          {!isMobile && (
-            <>
-              <motion.div animate={{ y: [0, -8, 0, 4, 0], x: [0, 6, 0, -4, 0], opacity: [0.12, 0.2, 0.12] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }} style={{ position: 'absolute', top: '-40px', right: '-30px', width: '180px', height: '180px', borderRadius: '50%', background: brass, filter: 'blur(80px)', opacity: 0.15, pointerEvents: 'none' as const, zIndex: 0 }} />
-              <motion.div animate={{ y: [0, -6, 0, 3, 0], x: [0, 5, 0, -3, 0], opacity: [0.08, 0.14, 0.08] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 3 }} style={{ position: 'absolute', bottom: '40px', left: '-50px', width: '140px', height: '140px', borderRadius: '50%', background: sage, filter: 'blur(70px)', opacity: 0.1, pointerEvents: 'none' as const, zIndex: 0 }} />
-            </>
-          )}
-          <motion.div animate={float(0, 5, 9)} style={{ position: 'relative', zIndex: 1 }}>
+          <motion.div animate={{ y: [0, -8, 0, 4, 0], x: [0, 6, 0, -4, 0], opacity: [0.12, 0.22, 0.12] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' as const }} style={{ position: 'absolute', top: isMobile ? '-20px' : '-40px', right: isMobile ? '-20px' : '-30px', width: isMobile ? '120px' : '180px', height: isMobile ? '120px' : '180px', borderRadius: '50%', background: brass, filter: isMobile ? 'blur(50px)' : 'blur(80px)', opacity: isMobile ? 0.2 : 0.15, pointerEvents: 'none' as const, zIndex: 0 }} />
+          <motion.div animate={{ y: [0, -6, 0, 3, 0], x: [0, 5, 0, -3, 0], opacity: [0.08, 0.16, 0.08] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' as const, delay: 3 }} style={{ position: 'absolute', bottom: isMobile ? '20px' : '40px', left: isMobile ? '-30px' : '-50px', width: isMobile ? '100px' : '140px', height: isMobile ? '100px' : '140px', borderRadius: '50%', background: sage, filter: isMobile ? 'blur(45px)' : 'blur(70px)', opacity: isMobile ? 0.15 : 0.1, pointerEvents: 'none' as const, zIndex: 0 }} />
+          <motion.div animate={float(0, isMobile ? 10 : 5, isMobile ? 7 : 9)} style={{ position: 'relative', zIndex: 1 }}>
             <div style={{ aspectRatio: '4/5', background: isDark ? '#2B211A' : '#DDD6C8', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#3A3228' : '#A8A098' }}>
                 <span style={{ fontFamily: serif, fontSize: '13px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Liz, in studio</span>
