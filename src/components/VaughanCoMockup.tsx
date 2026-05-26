@@ -40,6 +40,8 @@ export default function VaughanCoMockup() {
   const [navOpen, setNavOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const musicRef = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 820);
@@ -413,6 +415,25 @@ export default function VaughanCoMockup() {
         <Logo size={14} showByline showMonogram />
         <div style={{ ...microLabel, color: textFaint, textAlign: 'center' }}>Thoughtful Spaces. Intentional Living. · © 2026</div>
       </footer>
+
+      {/* Music player */}
+      <motion.button
+        onClick={() => setMusicPlaying(!musicPlaying)}
+        animate={{ scale: musicPlaying ? [1, 1.08, 1] : 1 }}
+        transition={musicPlaying ? { duration: 1.5, repeat: Infinity, ease: 'easeInOut' as const } : {}}
+        style={{ position: 'fixed', bottom: isMobile ? '70px' : '80px', left: isMobile ? '14px' : '24px', zIndex: 100, width: '44px', height: '44px', borderRadius: '50%', background: musicPlaying ? brass : surface, border: `1px solid ${musicPlaying ? brass : border}`, color: musicPlaying ? '#121212' : textMuted, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', backdropFilter: 'blur(12px)' }}
+        title={musicPlaying ? 'Pause vibes' : 'Play vibes'}
+      >
+        {musicPlaying ? <Pause size={16} /> : <Play size={16} style={{ marginLeft: '2px' }} />}
+      </motion.button>
+      {musicPlaying && (
+        <iframe
+          ref={musicRef}
+          src="https://www.youtube.com/embed/ZJL4UGSbeFg?autoplay=1&loop=1&playlist=ZJL4UGSbeFg&controls=0&showinfo=0&rel=0&modestbranding=1"
+          allow="autoplay"
+          style={{ position: 'fixed', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' as const, bottom: 0, left: 0 }}
+        />
+      )}
 
       {/* Sticky CTA */}
       <div style={{ position: 'sticky', bottom: '12px', margin: isMobile ? '0 14px 14px' : '0 56px 16px', background: text, color: bg, padding: isMobile ? '11px 14px' : '12px 22px', borderRadius: '2px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
