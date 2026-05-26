@@ -41,7 +41,15 @@ export default function VaughanCoMockup() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [musicPlaying, setMusicPlaying] = useState(false);
+  const [musicTriggered, setMusicTriggered] = useState(false);
   const musicRef = useRef<HTMLIFrameElement | null>(null);
+
+  useEffect(() => {
+    if (musicTriggered) return;
+    const onScroll = () => { setMusicPlaying(true); setMusicTriggered(true); };
+    window.addEventListener('scroll', onScroll, { once: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [musicTriggered]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 820);
