@@ -91,22 +91,22 @@ export default function VaughanCoMockup() {
 
   // —— Zero-gravity motion ——
   const float = (delay = 0, y = 6, dur = 8) => ({
-    y: [0, -y, 0, y * 0.4, 0],
-    transition: { duration: dur, repeat: Infinity, ease: 'easeInOut' as const, delay },
+    y: [0, -(isMobile ? y * 2.5 : y), 0, (isMobile ? y * 1.2 : y * 0.4), 0],
+    transition: { duration: isMobile ? dur * 0.7 : dur, repeat: Infinity, ease: 'easeInOut' as const, delay },
   });
   const floatX = (delay = 0, x = 4, dur = 10) => ({
-    x: [0, x, 0, -x * 0.6, 0],
-    transition: { duration: dur, repeat: Infinity, ease: 'easeInOut' as const, delay },
+    x: [0, (isMobile ? x * 2 : x), 0, -(isMobile ? x * 1.5 : x * 0.6), 0],
+    transition: { duration: isMobile ? dur * 0.7 : dur, repeat: Infinity, ease: 'easeInOut' as const, delay },
   });
   const fadeUp = {
-    initial: { opacity: 0, y: isMobile ? 32 : 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-40px' },
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    initial: { opacity: 0, y: isMobile ? 48 : 24, scale: isMobile ? 0.95 : 1 },
+    whileInView: { opacity: 1, y: 0, scale: 1 },
+    viewport: { once: true, margin: '-20px' },
+    transition: { duration: isMobile ? 1 : 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   };
   const stagger = (i: number) => ({
     ...fadeUp,
-    transition: { ...fadeUp.transition, delay: i * (isMobile ? 0.15 : 0.1) },
+    transition: { ...fadeUp.transition, delay: i * (isMobile ? 0.18 : 0.1) },
   });
 
   // —— Responsive helpers ——
@@ -229,12 +229,24 @@ export default function VaughanCoMockup() {
           </div>
         </div>
         <div style={{ position: 'relative' }}>
-          {/* Background orbs */}
-          <motion.div animate={{ y: [0, -8, 0, 4, 0], x: [0, 6, 0, -4, 0], opacity: [0.12, 0.22, 0.12] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' as const }} style={{ position: 'absolute', top: isMobile ? '-20px' : '-40px', right: isMobile ? '-20px' : '-30px', width: isMobile ? '120px' : '180px', height: isMobile ? '120px' : '180px', borderRadius: '50%', background: brass, filter: isMobile ? 'blur(50px)' : 'blur(80px)', opacity: isMobile ? 0.2 : 0.15, pointerEvents: 'none' as const, zIndex: 0 }} />
-          <motion.div animate={{ y: [0, -6, 0, 3, 0], x: [0, 5, 0, -3, 0], opacity: [0.08, 0.16, 0.08] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' as const, delay: 3 }} style={{ position: 'absolute', bottom: isMobile ? '20px' : '40px', left: isMobile ? '-30px' : '-50px', width: isMobile ? '100px' : '140px', height: isMobile ? '100px' : '140px', borderRadius: '50%', background: sage, filter: isMobile ? 'blur(45px)' : 'blur(70px)', opacity: isMobile ? 0.15 : 0.1, pointerEvents: 'none' as const, zIndex: 0 }} />
-          <motion.div animate={float(0, isMobile ? 10 : 5, isMobile ? 7 : 9)} style={{ position: 'relative', zIndex: 1 }}>
+          {/* Background orbs — large, visible, dreamy */}
+          <motion.div animate={{ y: [0, -20, 0, 12, 0], x: [0, 15, 0, -10, 0], opacity: [0.18, 0.35, 0.18] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' as const }} style={{ position: 'absolute', top: isMobile ? '-40px' : '-40px', right: isMobile ? '-40px' : '-30px', width: isMobile ? '200px' : '240px', height: isMobile ? '200px' : '240px', borderRadius: '50%', background: `radial-gradient(circle, ${brass}, transparent 70%)`, filter: isMobile ? 'blur(40px)' : 'blur(60px)', pointerEvents: 'none' as const, zIndex: 0 }} />
+          <motion.div animate={{ y: [0, -15, 0, 8, 0], x: [0, 12, 0, -8, 0], opacity: [0.12, 0.28, 0.12] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' as const, delay: 2 }} style={{ position: 'absolute', bottom: isMobile ? '-20px' : '40px', left: isMobile ? '-50px' : '-50px', width: isMobile ? '180px' : '200px', height: isMobile ? '180px' : '200px', borderRadius: '50%', background: `radial-gradient(circle, ${sage}, transparent 70%)`, filter: isMobile ? 'blur(35px)' : 'blur(50px)', pointerEvents: 'none' as const, zIndex: 0 }} />
+          {/* Third orb — accent color, top-left drift */}
+          <motion.div animate={{ y: [0, 18, 0, -10, 0], x: [0, -8, 0, 12, 0], opacity: [0.08, 0.2, 0.08] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' as const, delay: 4 }} style={{ position: 'absolute', top: isMobile ? '40%' : '30%', left: isMobile ? '-20px' : '10%', width: isMobile ? '140px' : '160px', height: isMobile ? '140px' : '160px', borderRadius: '50%', background: `radial-gradient(circle, ${accent}, transparent 70%)`, filter: 'blur(50px)', pointerEvents: 'none' as const, zIndex: 0 }} />
+
+          {/* Hero portrait with Ken Burns zoom */}
+          <motion.div animate={float(0, isMobile ? 12 : 5, isMobile ? 5 : 9)} style={{ position: 'relative', zIndex: 1 }}>
             <div style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
-              <motion.img src="/images/liz-portrait.jpg" alt="Liz Vaughan in her design studio" whileHover={{ scale: 1.04 }} transition={{ duration: 0.6, ease: 'easeOut' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <motion.img
+                src="/images/liz-portrait.jpg"
+                alt="Liz Vaughan in her design studio"
+                initial={{ scale: 1.15 }}
+                animate={{ scale: [1.15, 1.05, 1.15] }}
+                transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' as const }}
+                whileHover={{ scale: 1.08 }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45) 100%)', pointerEvents: 'none' as const }} />
               <div style={{ position: 'absolute', bottom: '14px', left: '14px', right: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                 <div>
@@ -245,14 +257,14 @@ export default function VaughanCoMockup() {
               </div>
             </div>
           </motion.div>
-          {!isMobile && (
-            <motion.div animate={float(2, 4, 11)} style={{ position: 'absolute', bottom: '-20px', left: '-20px', background: surface, border: `1px solid ${border}`, padding: '14px 18px', borderRadius: '2px', maxWidth: '220px', zIndex: 2 }}>
-              <div style={{ ...microLabel, marginBottom: '8px' }}>As featured in</div>
-              <div style={{ display: 'flex', gap: '10px', fontFamily: serif, fontSize: '11px', color: text, fontStyle: 'italic', flexWrap: 'wrap' }}>
-                <span>Columbus Monthly</span><span style={{ color: textFaint }}>·</span><span>614</span><span style={{ color: textFaint }}>·</span><span>Dwell</span>
-              </div>
-            </motion.div>
-          )}
+
+          {/* As featured in — visible on mobile too */}
+          <motion.div animate={float(2, isMobile ? 8 : 4, isMobile ? 6 : 11)} style={{ position: isMobile ? 'relative' : 'absolute', bottom: isMobile ? undefined : '-20px', left: isMobile ? undefined : '-20px', marginTop: isMobile ? '12px' : undefined, background: surface, border: `1px solid ${border}`, padding: isMobile ? '12px 16px' : '14px 18px', borderRadius: '2px', maxWidth: '220px', zIndex: 2 }}>
+            <div style={{ ...microLabel, marginBottom: '8px' }}>As featured in</div>
+            <div style={{ display: 'flex', gap: '10px', fontFamily: serif, fontSize: '11px', color: text, fontStyle: 'italic', flexWrap: 'wrap' }}>
+              <span>Columbus Monthly</span><span style={{ color: textFaint }}>·</span><span>614</span><span style={{ color: textFaint }}>·</span><span>Dwell</span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -276,8 +288,8 @@ export default function VaughanCoMockup() {
             { title: 'Olentangy estate', tag: 'Build', img: '/images/olentangy-estate.jpg' },
             { title: 'Bexley reno', tag: 'Interior', img: '/images/bexley-reno.jpg' },
           ].map(({ title, tag, img }, i) => (
-            <motion.div key={title} {...stagger(i)} whileHover={{ y: -6, transition: { duration: 0.4 } }} style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
-              <motion.img src={img} alt={title} whileHover={{ scale: 1.06 }} transition={{ duration: 0.6, ease: 'easeOut' }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            <motion.div key={title} {...stagger(i)} whileHover={{ y: -8 }} whileTap={{ scale: 0.97 }} style={{ aspectRatio: '4/5', borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
+              <motion.img src={img} alt={title} initial={{ scale: 1.2 }} whileInView={{ scale: 1.05 }} viewport={{ once: true }} transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: i * 0.1 }} whileHover={{ scale: 1.1 }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%)', pointerEvents: 'none' as const }} />
               <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.92)', color: '#121212', padding: '3px 8px', fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px', backdropFilter: 'blur(8px)' }}>{tag}</div>
               <div style={{ position: 'absolute', bottom: '12px', left: '12px', color: 'white', fontFamily: serif, fontSize: '13px', fontStyle: 'italic', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>{title}</div>
@@ -334,7 +346,7 @@ export default function VaughanCoMockup() {
             <button style={brassBtn}>See a Liz walkthrough <ArrowRight size={12} /></button>
           </div>
           <div style={{ aspectRatio: '5/4', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #3A3228' }}>
-            <motion.img src="/images/lumebox-primary.jpg" alt="Riverlea primary bedroom 3D walkthrough" initial={{ scale: 1.08 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            <motion.img src="/images/lumebox-primary.jpg" alt="Riverlea primary bedroom 3D walkthrough" initial={{ scale: 1.2 }} animate={{ scale: [1.2, 1.05, 1.2] }} transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' as const }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%)', pointerEvents: 'none' as const }} />
             <motion.div animate={float(0, 3, 6)} style={{ position: 'absolute', top: '14px', right: '14px', background: 'rgba(26,22,18,0.75)', backdropFilter: 'blur(12px)', borderRadius: '2px', padding: '6px 10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <Box size={14} color={brass} strokeWidth={1} />
@@ -413,7 +425,7 @@ export default function VaughanCoMockup() {
       {/* Pull quote with parallax background */}
       <section style={{ position: 'relative', overflow: 'hidden', padding: `${isMobile ? '72px' : '120px'} ${pad}`, textAlign: 'center' }}>
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <motion.img src="/images/bexley-reno.jpg" alt="" initial={{ scale: 1.15 }} whileInView={{ scale: 1.05 }} viewport={{ once: true }} transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(2px)' }} />
+          <motion.img src="/images/bexley-reno.jpg" alt="" animate={{ scale: [1.15, 1.05, 1.15], x: [0, -10, 0] }} transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' as const }} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(2px)' }} />
           <div style={{ position: 'absolute', inset: 0, background: isDark ? 'rgba(18,18,18,0.88)' : 'rgba(245,241,236,0.88)' }} />
         </div>
         <motion.div {...fadeUp} style={{ maxWidth: '720px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
