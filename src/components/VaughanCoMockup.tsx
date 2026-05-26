@@ -442,23 +442,40 @@ export default function VaughanCoMockup() {
         <div style={{ ...microLabel, color: textFaint, textAlign: 'center' }}>Thoughtful Spaces. Intentional Living. · © 2026</div>
       </footer>
 
-      {/* Music player */}
-      <motion.button
-        onClick={() => setMusicPlaying(!musicPlaying)}
-        animate={{ scale: musicPlaying ? [1, 1.08, 1] : 1 }}
-        transition={musicPlaying ? { duration: 1.5, repeat: Infinity, ease: 'easeInOut' as const } : {}}
-        style={{ position: 'fixed', bottom: isMobile ? '70px' : '80px', left: isMobile ? '14px' : '24px', zIndex: 100, width: '44px', height: '44px', borderRadius: '50%', background: musicPlaying ? brass : surface, border: `1px solid ${musicPlaying ? brass : border}`, color: musicPlaying ? '#121212' : textMuted, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', backdropFilter: 'blur(12px)' }}
-        title={musicPlaying ? 'Pause vibes' : 'Play vibes'}
+      {/* Music player — mini visible player */}
+      <motion.div
+        initial={{ y: 80, opacity: 0 }}
+        animate={musicPlaying ? { y: 0, opacity: 1 } : { y: 80, opacity: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+        style={{ position: 'fixed', bottom: isMobile ? '68px' : '78px', left: isMobile ? '14px' : '24px', zIndex: 100, pointerEvents: musicPlaying ? 'auto' as const : 'none' as const }}
       >
-        {musicPlaying ? <Pause size={16} /> : <Play size={16} style={{ marginLeft: '2px' }} />}
-      </motion.button>
-      {musicPlaying && (
-        <iframe
-          ref={musicRef}
-          src="https://www.youtube.com/embed/ZJL4UGSbeFg?autoplay=1&loop=1&playlist=ZJL4UGSbeFg&controls=0&showinfo=0&rel=0&modestbranding=1"
-          allow="autoplay"
-          style={{ position: 'fixed', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' as const, bottom: 0, left: 0 }}
-        />
+        <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: '2px', padding: '8px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', backdropFilter: 'blur(16px)', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ width: isMobile ? '120px' : '140px', height: isMobile ? '68px' : '79px', borderRadius: '2px', overflow: 'hidden', flexShrink: 0 }}>
+            {musicPlaying && (
+              <iframe
+                ref={musicRef}
+                src="https://www.youtube.com/embed/ZJL4UGSbeFg?autoplay=1&loop=1&playlist=ZJL4UGSbeFg&rel=0&modestbranding=1&playsinline=1"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                style={{ width: '100%', height: '100%', border: 'none' }}
+              />
+            )}
+          </div>
+          <button onClick={() => setMusicPlaying(false)} style={{ background: 'transparent', border: 'none', color: textMuted, cursor: 'pointer', padding: '4px', display: 'flex' }}>
+            <X size={14} />
+          </button>
+        </div>
+      </motion.div>
+      {!musicPlaying && (
+        <motion.button
+          onClick={() => setMusicPlaying(true)}
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' as const }}
+          style={{ position: 'fixed', bottom: isMobile ? '70px' : '80px', left: isMobile ? '14px' : '24px', zIndex: 100, width: '44px', height: '44px', borderRadius: '50%', background: surface, border: `1px solid ${border}`, color: textMuted, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', backdropFilter: 'blur(12px)' }}
+          title="Play vibes"
+        >
+          <Play size={16} style={{ marginLeft: '2px' }} />
+        </motion.button>
       )}
 
       {/* Sticky CTA */}
