@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import {
   Sun, Moon, Calendar, MessageCircle, ChevronRight, ChevronLeft, ArrowRight,
   Plus, Box, Sparkles, Users, TrendingUp, Circle, Image as ImageIcon,
@@ -71,6 +72,26 @@ export default function VaughanCoMockup() {
   const serif = '"Prata", Georgia, "Times New Roman", serif';
   const sans  = '"Space Grotesk", ui-sans-serif, system-ui, sans-serif';
   const mono  = { fontFamily: '"JetBrains Mono", ui-monospace, "SF Mono", monospace' };
+
+  // —— Zero-gravity motion ——
+  const float = (delay = 0, y = 6, dur = 8) => ({
+    y: [0, -y, 0, y * 0.4, 0],
+    transition: { duration: dur, repeat: Infinity, ease: 'easeInOut' as const, delay },
+  });
+  const floatX = (delay = 0, x = 4, dur = 10) => ({
+    x: [0, x, 0, -x * 0.6, 0],
+    transition: { duration: dur, repeat: Infinity, ease: 'easeInOut' as const, delay },
+  });
+  const fadeUp = {
+    initial: { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-60px' },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  };
+  const stagger = (i: number) => ({
+    ...fadeUp,
+    transition: { ...fadeUp.transition, delay: i * 0.1 },
+  });
 
   // —— Responsive helpers ——
   const pad = isMobile ? '20px' : '56px';
@@ -172,9 +193,9 @@ export default function VaughanCoMockup() {
       <section style={{ padding: isMobile ? `40px ${pad} 56px` : '64px 56px 96px', display: 'grid', gridTemplateColumns: cols('1fr', '1.15fr 1fr'), gap: cols('40px', '56px'), alignItems: 'center' }}>
         <div>
           <div style={{ ...sectionLabel, marginBottom: isMobile ? '20px' : '28px' }}>Liz Vaughan · CEO + Principal Designer</div>
-          <h1 style={{ fontFamily: serif, fontSize: isMobile ? '40px' : '64px', lineHeight: '1.02', fontWeight: 400, margin: '0 0 24px', letterSpacing: '-0.015em' }}>
+          <motion.h1 {...fadeUp} style={{ fontFamily: serif, fontSize: isMobile ? '40px' : '64px', lineHeight: '1.02', fontWeight: 400, margin: '0 0 24px', letterSpacing: '-0.015em' }}>
             Designed by <em style={{ color: brass, fontStyle: 'italic' }}>Liz.</em><br />Built for your family.
-          </h1>
+          </motion.h1>
           <p style={{ fontSize: isMobile ? '14px' : '15px', lineHeight: '1.85', color: textMuted, maxWidth: '480px', margin: '0 0 28px' }}>
             Liz Vaughan has designed and built more than 180 custom homes across Central Ohio. Each one begins the same way — a conversation, a blueprint, a walk through your house in three dimensions before a single stud goes up.
           </p>
@@ -192,25 +213,34 @@ export default function VaughanCoMockup() {
           </div>
         </div>
         <div style={{ position: 'relative' }}>
-          <div style={{ aspectRatio: '4/5', background: isDark ? '#2B211A' : '#DDD6C8', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#3A3228' : '#A8A098' }}>
-              <span style={{ fontFamily: serif, fontSize: '13px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Liz, in studio</span>
-            </div>
-            <div style={{ position: 'absolute', bottom: '14px', left: '14px', right: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-              <div>
-                <div style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)', marginBottom: '4px' }}>Portrait by</div>
-                <div style={{ fontFamily: serif, fontSize: '13px', color: 'white', fontStyle: 'italic' }}>Andrew Hood</div>
-              </div>
-              <LizSig size={32} />
-            </div>
-          </div>
+          {/* Background orbs */}
           {!isMobile && (
-            <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', background: surface, border: `1px solid ${border}`, padding: '14px 18px', borderRadius: '2px', maxWidth: '220px' }}>
+            <>
+              <motion.div animate={{ y: [0, -8, 0, 4, 0], x: [0, 6, 0, -4, 0], opacity: [0.12, 0.2, 0.12] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }} style={{ position: 'absolute', top: '-40px', right: '-30px', width: '180px', height: '180px', borderRadius: '50%', background: brass, filter: 'blur(80px)', opacity: 0.15, pointerEvents: 'none' as const, zIndex: 0 }} />
+              <motion.div animate={{ y: [0, -6, 0, 3, 0], x: [0, 5, 0, -3, 0], opacity: [0.08, 0.14, 0.08] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 3 }} style={{ position: 'absolute', bottom: '40px', left: '-50px', width: '140px', height: '140px', borderRadius: '50%', background: sage, filter: 'blur(70px)', opacity: 0.1, pointerEvents: 'none' as const, zIndex: 0 }} />
+            </>
+          )}
+          <motion.div animate={float(0, 5, 9)} style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ aspectRatio: '4/5', background: isDark ? '#2B211A' : '#DDD6C8', borderRadius: '2px', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#3A3228' : '#A8A098' }}>
+                <span style={{ fontFamily: serif, fontSize: '13px', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Liz, in studio</span>
+              </div>
+              <div style={{ position: 'absolute', bottom: '14px', left: '14px', right: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                <div>
+                  <div style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)', marginBottom: '4px' }}>Portrait by</div>
+                  <div style={{ fontFamily: serif, fontSize: '13px', color: 'white', fontStyle: 'italic' }}>Andrew Hood</div>
+                </div>
+                <LizSig size={32} />
+              </div>
+            </div>
+          </motion.div>
+          {!isMobile && (
+            <motion.div animate={float(2, 4, 11)} style={{ position: 'absolute', bottom: '-20px', left: '-20px', background: surface, border: `1px solid ${border}`, padding: '14px 18px', borderRadius: '2px', maxWidth: '220px', zIndex: 2 }}>
               <div style={{ ...microLabel, marginBottom: '8px' }}>As featured in</div>
               <div style={{ display: 'flex', gap: '10px', fontFamily: serif, fontSize: '11px', color: text, fontStyle: 'italic', flexWrap: 'wrap' }}>
                 <span>Columbus Monthly</span><span style={{ color: textFaint }}>·</span><span>614</span><span style={{ color: textFaint }}>·</span><span>Dwell</span>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
       </section>
@@ -234,12 +264,12 @@ export default function VaughanCoMockup() {
             { title: 'Riverlea kitchen', tag: 'Interior', hue: '#BE8274' },
             { title: 'Olentangy estate', tag: 'Build', hue: '#B8A89C' },
             { title: 'Bexley reno', tag: 'Interior', hue: '#B59A6A' },
-          ].map(({ title, tag, hue }) => (
-            <div key={title} style={{ aspectRatio: '4/5', background: hue, borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
+          ].map(({ title, tag, hue }, i) => (
+            <motion.div key={title} {...stagger(i)} whileHover={{ y: -4, transition: { duration: 0.3 } }} style={{ aspectRatio: '4/5', background: hue, borderRadius: '2px', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}>
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%)' }} />
               <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,0.95)', color: '#121212', padding: '3px 8px', fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, borderRadius: '1px' }}>{tag}</div>
               <div style={{ position: 'absolute', bottom: '12px', left: '12px', color: 'white', fontFamily: serif, fontSize: '13px', fontStyle: 'italic' }}>{title}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
         <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
@@ -266,13 +296,13 @@ export default function VaughanCoMockup() {
               { n: 'IV', title: 'The Build', sub: 'Liz coordinates the trades. You follow along inside Symphony — your private space with Liz.' },
               { n: 'V', title: 'The Gift', sub: 'On move-in day, Liz hands you a curated workbook documenting your home, from blueprint to keys.' },
             ].map(({ n, title, sub }, i) => (
-              <div key={n} style={{ display: 'grid', gridTemplateColumns: cols('40px 1fr', '60px 1fr'), gap: '16px', padding: '20px 0', borderTop: i === 0 ? `1px solid ${border}` : 'none', borderBottom: `1px solid ${border}` }}>
+              <motion.div key={n} {...stagger(i)} style={{ display: 'grid', gridTemplateColumns: cols('40px 1fr', '60px 1fr'), gap: '16px', padding: '20px 0', borderTop: i === 0 ? `1px solid ${border}` : 'none', borderBottom: `1px solid ${border}` }}>
                 <div style={{ fontFamily: serif, fontSize: '20px', color: brass, fontStyle: 'italic' }}>{n}</div>
                 <div>
                   <div style={{ fontFamily: serif, fontSize: isMobile ? '17px' : '19px', marginBottom: '6px' }}>{title}</div>
                   <div style={{ fontSize: '13px', lineHeight: '1.7', color: textMuted }}>{sub}</div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -292,9 +322,9 @@ export default function VaughanCoMockup() {
             <button style={brassBtn}>See a Liz walkthrough <ArrowRight size={12} /></button>
           </div>
           <div style={{ aspectRatio: '5/4', background: '#1A1612', borderRadius: '2px', position: 'relative', overflow: 'hidden', border: '1px solid #3A3228' }}>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <motion.div animate={{ ...float(0, 4, 7), rotateY: [0, 8, 0, -8, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Box size={36} color={brass} strokeWidth={0.8} />
-            </div>
+            </motion.div>
             <div style={{ position: 'absolute', bottom: '12px', left: '12px', right: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B5AA9A' }}>Riverlea · Primary</div>
               <div style={{ fontSize: '9px', color: sage, display: 'flex', gap: '4px', alignItems: 'center', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
@@ -370,12 +400,12 @@ export default function VaughanCoMockup() {
 
       {/* Pull quote */}
       <section style={{ padding: `0 ${pad} ${isMobile ? '64px' : '96px'}`, textAlign: 'center' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+        <motion.div {...fadeUp} style={{ maxWidth: '720px', margin: '0 auto' }}>
           <div style={{ fontFamily: serif, fontSize: isMobile ? '20px' : '32px', fontStyle: 'italic', lineHeight: '1.4', color: text, marginBottom: '20px' }}>
             "Liz didn't build us a house. She built our family a home, and then handed us a book to remember how it happened."
           </div>
           <div style={microLabel}>The Mercer family · Riverlea</div>
-        </div>
+        </motion.div>
       </section>
 
       <footer style={{ padding: isMobile ? '24px 20px' : '32px 56px', borderTop: `1px solid ${borderSoft}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: cols('column', 'row'), gap: '12px' }}>
