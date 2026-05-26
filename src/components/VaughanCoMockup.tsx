@@ -41,21 +41,7 @@ export default function VaughanCoMockup() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [musicPlaying, setMusicPlaying] = useState(false);
-  const [musicTriggered, setMusicTriggered] = useState(false);
   const musicRef = useRef<HTMLIFrameElement | null>(null);
-
-  useEffect(() => {
-    if (musicTriggered) return;
-    const trigger = () => { setMusicPlaying(true); setMusicTriggered(true); };
-    window.addEventListener('scroll', trigger, { once: true });
-    window.addEventListener('touchstart', trigger, { once: true });
-    window.addEventListener('click', trigger, { once: true });
-    return () => {
-      window.removeEventListener('scroll', trigger);
-      window.removeEventListener('touchstart', trigger);
-      window.removeEventListener('click', trigger);
-    };
-  }, [musicTriggered]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 820);
@@ -442,16 +428,22 @@ export default function VaughanCoMockup() {
         <div style={{ ...microLabel, color: textFaint, textAlign: 'center' }}>Thoughtful Spaces. Intentional Living. · © 2026</div>
       </footer>
 
-      {/* Music player — mini visible player */}
-      <motion.div
-        initial={{ y: 80, opacity: 0 }}
-        animate={musicPlaying ? { y: 0, opacity: 1 } : { y: 80, opacity: 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-        style={{ position: 'fixed', bottom: isMobile ? '68px' : '78px', left: isMobile ? '14px' : '24px', zIndex: 100, pointerEvents: musicPlaying ? 'auto' as const : 'none' as const }}
-      >
-        <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: '2px', padding: '8px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', backdropFilter: 'blur(16px)', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ width: isMobile ? '120px' : '140px', height: isMobile ? '68px' : '79px', borderRadius: '2px', overflow: 'hidden', flexShrink: 0 }}>
-            {musicPlaying && (
+      {/* Music player */}
+      {musicPlaying ? (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          style={{ position: 'fixed', bottom: isMobile ? '68px' : '78px', left: isMobile ? '14px' : '24px', zIndex: 100 }}
+        >
+          <div style={{ background: surface, border: `1px solid ${border}`, borderRadius: '4px', padding: '6px', boxShadow: '0 8px 32px rgba(0,0,0,0.25)', backdropFilter: 'blur(16px)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 6px 6px', gap: '8px' }}>
+              <div style={{ ...microLabel, fontSize: '8px', color: brass }}>Now playing · Shania Twain</div>
+              <button onClick={() => setMusicPlaying(false)} style={{ background: 'transparent', border: 'none', color: textMuted, cursor: 'pointer', padding: '2px', display: 'flex' }}>
+                <X size={12} />
+              </button>
+            </div>
+            <div style={{ width: isMobile ? '200px' : '240px', height: isMobile ? '113px' : '135px', borderRadius: '2px', overflow: 'hidden' }}>
               <iframe
                 ref={musicRef}
                 src="https://www.youtube.com/embed/ZJL4UGSbeFg?autoplay=1&loop=1&playlist=ZJL4UGSbeFg&rel=0&modestbranding=1&playsinline=1"
@@ -459,22 +451,18 @@ export default function VaughanCoMockup() {
                 allowFullScreen
                 style={{ width: '100%', height: '100%', border: 'none' }}
               />
-            )}
+            </div>
           </div>
-          <button onClick={() => setMusicPlaying(false)} style={{ background: 'transparent', border: 'none', color: textMuted, cursor: 'pointer', padding: '4px', display: 'flex' }}>
-            <X size={14} />
-          </button>
-        </div>
-      </motion.div>
-      {!musicPlaying && (
+        </motion.div>
+      ) : (
         <motion.button
           onClick={() => setMusicPlaying(true)}
-          animate={{ scale: [1, 1.06, 1] }}
+          animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' as const }}
-          style={{ position: 'fixed', bottom: isMobile ? '70px' : '80px', left: isMobile ? '14px' : '24px', zIndex: 100, width: '44px', height: '44px', borderRadius: '50%', background: surface, border: `1px solid ${border}`, color: textMuted, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', backdropFilter: 'blur(12px)' }}
+          style={{ position: 'fixed', bottom: isMobile ? '70px' : '80px', left: isMobile ? '14px' : '24px', zIndex: 100, width: isMobile ? '52px' : '48px', height: isMobile ? '52px' : '48px', borderRadius: '50%', background: brass, border: 'none', color: '#121212', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 4px 24px rgba(0,0,0,0.2), 0 0 20px ${brass}44` }}
           title="Play vibes"
         >
-          <Play size={16} style={{ marginLeft: '2px' }} />
+          <Play size={20} fill="#121212" style={{ marginLeft: '3px' }} />
         </motion.button>
       )}
 
